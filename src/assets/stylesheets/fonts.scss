@@ -1,0 +1,322 @@
+// @import url("https://cdn.jsdelivr.net/npm/@xz/fonts@1/serve/plus-jakarta-text.min.css");
+@import url("https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+.force-unset-headline {
+  margin: unset;
+  margin-block-start: unset;
+  margin-block-end: unset;
+  margin-inline-start: unset;
+  margin-inline-end: unset;
+  font-weight: unset;
+}
+
+.ul {
+  @extend .force-unset-headline;
+}
+.H1B {
+  font-family: "Kanit", sans-serif;
+  font-size: 48.8px;
+  font-weight: 1000;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.38;
+  letter-spacing: normal;
+}
+
+h1 {
+  font-family: "Kanit", sans-serif;
+  font-size: 48.8px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.38;
+  letter-spacing: normal;
+  @extend .force-unset-headline;
+}
+
+.H1L {
+  font-family: "Kanit", sans-serif;
+  font-size: 48.8px;
+  font-weight: 300;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.38;
+  letter-spacing: normal;
+}
+
+.H2B {
+  font-family: "Kanit", sans-serif;
+  font-size: 39.1px;
+  font-weight: 1000;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.38;
+  letter-spacing: normal;
+}
+
+h2 {
+  font-family: "Kanit", sans-serif;
+  font-size: 39.1px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.38;
+  letter-spacing: normal;
+  @extend .force-unset-headline;
+}
+
+.H2L {
+  font-family: "Kanit", sans-serif;
+  font-size: 39.1px;
+  font-weight: 300;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.38;
+  letter-spacing: normal;
+}
+
+.H3B {
+  font-family: "Kanit", sans-serif;
+  font-size: 31.3px;
+  font-weight: 1000;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.38;
+  letter-spacing: normal;
+}
+
+h3 {
+  font-family: "Kanit", sans-serif;
+  font-size: 31.3px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.38;
+  letter-spacing: normal;
+  @extend .force-unset-headline;
+}
+
+.H3L {
+  font-family: "Kanit", sans-serif;
+  font-size: 31.3px;
+  font-weight: 300;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.38;
+  letter-spacing: normal;
+}
+
+.H4B {
+  font-family: "Kanit", sans-serif;
+  font-size: 25px;
+  font-weight: 1000;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.38;
+  letter-spacing: normal;
+}
+
+h4 {
+  font-family: "Kanit", sans-serif;
+  font-size: 25px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.38;
+  letter-spacing: normal;
+}
+
+.H4L {
+  font-family: "Kanit", sans-serif;
+  font-size: 25px;
+  font-weight: 300;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.38;
+  letter-spacing: normal;
+}
+
+.H5B {
+  font-family: "Kanit", sans-serif;
+  font-size: 20px;
+  font-weight: 1000;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.38;
+  letter-spacing: normal;
+}
+
+h5 {
+  font-family: "Kanit", sans-serif;
+  font-size: 20px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.38;
+  letter-spacing: normal;
+  @extend .force-unset-headline;
+}
+
+.H5 {
+  font-family: "Kanit", sans-serif;
+  font-size: 20px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.38;
+  letter-spacing: normal;
+  @extend .force-unset-headline;
+}
+
+.H5L {
+  font-family: "Kanit", sans-serif;
+  font-size: 20px;
+  font-weight: 300;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.38;
+  letter-spacing: normal;
+}
+
+.BB {
+  font-family: "Kanit", sans-serif;
+  font-size: 16px;
+  // font-weight: 1000;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.38;
+  letter-spacing: normal;
+}
+
+.B {
+  font-family: "Kanit", sans-serif;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.38;
+  letter-spacing: normal;
+}
+
+.BL {
+  font-family: "Kanit", sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.38;
+  letter-spacing: normal;
+}
+
+.CB {
+  font-family: "Kanit", sans-serif;
+  font-size: 12.8px;
+  // font-weight: 1000;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.38;
+  letter-spacing: normal;
+}
+
+.C {
+  font-family: "Kanit", sans-serif;
+  font-size: 12.8px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.38;
+  letter-spacing: normal;
+}
+
+.CL {
+  font-family: "Kanit", sans-serif;
+  font-size: 12.8px;
+  font-weight: 300;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.38;
+  letter-spacing: normal;
+}
+
+.TB {
+  font-family: "Kanit", sans-serif;
+  font-size: 10.2px;
+  font-weight: bold;
+  // font-weight: 1000;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.38;
+  letter-spacing: normal;
+}
+
+.T {
+  font-family: "Kanit", sans-serif;
+  font-size: 10.2px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.38;
+  letter-spacing: normal;
+}
+
+.TL {
+  font-family: "Kanit", sans-serif;
+  font-size: 10.2px;
+  font-weight: 300;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.38;
+  letter-spacing: normal;
+}
+
+@media (max-width: 767.98px) {
+  h1,
+  .H1B,
+  .H1L {
+    font-size: calc(48.8px * 0.8);
+  }
+
+  h2,
+  .H2B,
+  .H2L {
+    font-size: calc(39.1px * 0.8);
+  }
+
+  h3,
+  .H3B,
+  .H3L {
+    font-size: calc(31.3px * 0.8);
+  }
+
+  h4,
+  .H4B,
+  .H4L {
+    font-size: calc(25px * 0.8);
+  }
+
+  h5,
+  .H5B,
+  .H5L {
+    font-size: calc(20px * 0.8);
+  }
+
+  .B,
+  .BB,
+  .BL {
+    font-size: calc(16px * 0.8);
+  }
+
+  .C,
+  .CB,
+  .CL {
+    font-size: calc(12.8px * 0.8);
+  }
+
+  .T,
+  .TB,
+  .TL {
+    font-size: calc(10.2px * 0.8);
+  }
+}

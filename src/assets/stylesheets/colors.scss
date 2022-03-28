@@ -1,0 +1,84 @@
+:root {
+    --white: #fff;
+    --yellow: #fdd700;
+    --text-gray-nd: #bbbbbb;
+    --red: #df4546;
+    --background-gray: #eeeeee;
+    --black-29: #292929;
+    --link-blue: #75b5ff;
+    --black-00: #040300;
+    --text-gray-st: #737373;
+    --icon-gray: #848484;
+    --green: #b8f0c8;
+    --nd-green: #69ce88;
+    --nd-yellow: #ffc700;
+    --tertiary-yellow-lighter: #fcf9f5;
+
+    --success: #198754;
+    --warning: #ffc107;
+    --danger: #dc3545;
+    --info: #0d6efd;
+    
+  }
+
+  
+.text-gray-st {
+    color: var(--text-gray-st) !important;
+  }
+  
+  .text-gray-nd {
+    color: var(--text-gray-nd) !important;
+  }
+  
+  .text-nd-yellow {
+    color: var(--nd-yellow) !important;
+  }
+  
+  .text-black-00 {
+    color: var(--black-00) !important;
+  }
+  
+  .text-black-29 {
+    color: var(--black-29) !important;
+  }
+  
+  .text-green {
+    color: var(--green) !important;
+  }
+  
+  .text-blue {
+    color: var(--link-blue) !important;
+  }
+  
+  .text-white {
+    color: var(--white) !important;
+  }
+  
+  .text-yellow {
+    color: var(--yellow) !important;
+  }
+  
+  .text-red {
+    color: var(--red) !important;
+  }
+  
+  .text-white {
+    color: var(--white) !important;
+  }
+  .bg-yellow {
+    background-color: var(--yellow) !important;
+  }
+  
+  .bg-white {
+    background-color: var(--white) !important;
+  }
+  
+  .bg-gray {
+    background-color: var(--background-gray) !important;
+  }
+  .link-blue-text {
+    color: var(--link-blue) !important;
+  }
+  .bg-red {
+    background-color: var(--red) !important;
+  }

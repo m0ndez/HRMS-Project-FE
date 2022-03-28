@@ -1,0 +1,47 @@
+// @import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+// @import "../../../node_modules/bootstrap/scss/bootstrap";
+
+@import "./fonts.scss";
+@import "./colors.scss";
+
+body {
+  animation: opacityAnim 0.3s ease-in-out;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: "Kanit", sans-serif;
+  background: var(--background-gray);
+  // display: flex;
+  // flex-direction: column;
+  // min-width: 1199.98px;
+  // min-height: 100vh;
+}
+
+a:any-link {
+  color: unset;
+  text-decoration: none;
+}
+
+@keyframes opacityAnim {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+input,
+select {
+  border: unset !important;
+}
+
+.clickable {
+  cursor: pointer;
+}

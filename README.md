@@ -1,7 +1,8 @@
-# HRMS-Project-FE
+# react-ts-vite-template
 
-Human Resource Management System With React + Redux TypeScript
-
+React TypeScript Version 17
+React Router Dom
+Redux
 
 ## Getting started
 
@@ -16,14 +17,14 @@ Already a pro? Just edit this README.md and make it your own. Want to make it ea
 
 ```
 cd existing_repo
-git remote add origin https://gitlab.com/m0ndez/hrms-project-fe.git
+git remote add origin https://gitlab.com/m0ndez/react-ts-vite-template.git
 git branch -M main
 git push -uf origin main
 ```
 
 ## Integrate with your tools
 
-- [ ] [Set up project integrations](https://gitlab.com/m0ndez/hrms-project-fe/-/settings/integrations)
+- [ ] [Set up project integrations](https://gitlab.com/m0ndez/react-ts-vite-template/-/settings/integrations)
 
 ## Collaborate with your team
 
