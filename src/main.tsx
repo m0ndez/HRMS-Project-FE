@@ -15,13 +15,14 @@ console.log("Check Type Prod: ", import.meta.env.PROD);
 
 const { store, persistor } = configureStore();
 
+
 interceptor({}, () => store);
 
 render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
       <BrowserRouter>
-      <App />
+        <App />
       </BrowserRouter>
     </PersistGate>
   </Provider>,
