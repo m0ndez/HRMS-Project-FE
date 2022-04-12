@@ -1,5 +1,5 @@
 import "./App.scss";
-import { Dashboard, Login } from "pages";
+import { Dashboard, Login, Layout } from "pages";
 import { Route, Routes } from "react-router-dom";
 import {
   createTheme,
@@ -38,8 +38,10 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Routes>
-          <Route element={<Login />} path={'/login'} />
-          <Route element={<Dashboard />} index />
+          <Route element={<Login />} path={"/login"} />
+          <Route element={<Layout />}>
+            <Route element={<Dashboard />} index />
+          </Route>
         </Routes>
       </ThemeProvider>
     </>

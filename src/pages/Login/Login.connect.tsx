@@ -1,4 +1,4 @@
 import { connect } from "react-redux";
-import LoginPage from "./Login.screen";
+import LoginPage from "./Login.page";
 
 export default connect()(LoginPage);
