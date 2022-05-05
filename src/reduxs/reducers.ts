@@ -6,7 +6,7 @@ import authentication from "./authentication/reducers";
 const persistConfig = {
     key: import.meta.env.VITE_ENVIRONMENT_NAME,
     storage,
-    whitelist: ["authentication", 'checkouts'],
+    whitelist: ["authentication"],
 }
 
 const authenPersistConfig = {
