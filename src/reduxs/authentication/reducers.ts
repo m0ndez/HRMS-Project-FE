@@ -30,7 +30,7 @@ const login = createReducer
             state: ReducerState<any>,
             action: AuthenticationActionType
         ) => {
-            const payload: AxiosResponse<IResponse<any>> = action.payload
+            const payload: AxiosResponse<IResponse<IResponseAuthentication>> = action.payload
             const convertedResponse = responseConverter.getMessage(payload);
 
             return {
@@ -47,7 +47,7 @@ const login = createReducer
     .handleAction(
         authenticationAction.loginAction.failure,
         (
-            state: ReducerState<any>,
+            state: ReducerState<IResponseAuthentication>,
             action: AuthenticationActionType
         ) => {
             const payload: IResponseConverter = action.payload;

@@ -7,12 +7,14 @@ const constants = {
 }
 
 
+// New Structure Convert Message from API Only
+
 const getMessage = (response: AxiosError<IResponse> | AxiosResponse<IResponse>): IResponseConverter => {
     if (isEmpty(get(response, 'response', {}))) {
         // Succes case
         const axiosResponse = response as AxiosResponse<IResponse>
         const messageCode: number = get(axiosResponse, 'data.code', get(response, 'status', 0))
-        const status: number = get(response, 'status', 0)
+        const status: number = +get(response, 'status', 0)
         const code: number = get(response, 'data.code', 0)
         return {
             code,

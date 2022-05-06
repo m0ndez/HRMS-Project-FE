@@ -7,6 +7,7 @@ declare interface ReducerState<T> {
 }
 
 declare interface RootReducers {
+    authentication: IAuthenticationStore
+    loader: ILoaderStore
 
-    
 }

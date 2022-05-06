@@ -1,7 +1,13 @@
 import {
   Button,
+  FormControl,
+  FormControlLabel,
+  FormHelperText,
+  FormLabel,
   IconButton,
   InputAdornment,
+  Radio,
+  RadioGroup,
   TextField,
   Typography,
 } from "@mui/material";
@@ -31,7 +37,8 @@ export default ({ contextItems, btnLabel, remark }: props) => {
   return (
     <>
       {contextItems.map((row, key) => {
-        const { label, name, type, required, value, formCategory } = row;
+        const { label, name, type, required, value, formCategory, options } =
+          row;
         const rules: Exclude<
           RegisterOptions,
           "valueAsNumber" | "valueAsDate" | "setValueAs"
@@ -129,6 +136,52 @@ export default ({ contextItems, btnLabel, remark }: props) => {
                       }}
                       variant={"outlined"}
                     />
+                  );
+                }}
+              />
+            )}
+
+            {["radio"].includes(type) && (
+              <Controller
+                name={name as FieldPath<ILoginForm>}
+                defaultValue={value}
+                control={control}
+                rules={rules}
+                render={({ field, fieldState }) => {
+                  const { name, onBlur, onChange, ref, value } = field;
+                  const { error } = fieldState;
+                  return (
+                    <FormControl error={Boolean(error)}>
+                      {/* <FormLabel id={`radio-buttons-group-label-${key}`}>
+                        <Typography children={label} variant={"body2"} />
+                      </FormLabel> */}
+                      <RadioGroup
+                        row
+                        aria-labelledby={`radio-buttons-group-label-${key}`}
+                        defaultValue={value}
+                        name={name}
+                        value={value}
+                        onChange={onChange}
+                        id={`${formCategory}-${name}`}
+                        ref={ref}
+                        onBlur={onBlur}
+                      >
+                        {options!.map((items, itemKey) => (
+                          <FormControlLabel
+                            key={`radio-${itemKey}`}
+                            value={items.value}
+                            control={<Radio />}
+                            label={
+                              <Typography
+                                children={items.label}
+                                variant={"body2"}
+                              />
+                            }
+                          />
+                        ))}
+                      </RadioGroup>
+                      <FormHelperText>{error?.message}</FormHelperText>
+                    </FormControl>
                   );
                 }}
               />

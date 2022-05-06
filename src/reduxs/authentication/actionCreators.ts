@@ -11,7 +11,7 @@ const loginAction = createAsyncAction(
     POST_LOGIN_REQUEST,
     POST_LOGIN_SUCCESS,
     POST_LOGIN_FAILURE
-)<any, AxiosResponse<IResponse<any>>, IResponseConverter>()
+)<any, AxiosResponse<IResponse<IResponseAuthentication>>, IResponseConverter>()
 
 export {
     loginAction

@@ -6,8 +6,7 @@ import {
   styled,
   Typography,
 } from "@mui/material";
-import { useFormik } from "formik";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useEffect } from "react";
 import {
   FormProvider,
   SubmitErrorHandler,
@@ -17,11 +16,12 @@ import {
 import { useNavigate } from "react-router-dom";
 import { LoginForm } from "./Component";
 import "./login.style.scss";
-import { initForm, scheme } from "./Model";
+import { initForm } from "./Model";
 import { initCategory } from "./Model/interface";
 import LOGIN_BG from "assets/Images/Login/login-scr.jpg";
-import { useDispatch } from "react-redux";
 import { login } from "reduxs/authentication/actions";
+import { noop } from "lodash";
+import { responseCode } from "constants/response";
 
 const constants = {
   title: "ยินดีต้อนรับเข้าสู่ระบบ HRMS",
@@ -39,25 +39,21 @@ const Brakepoints = styled("div")(({ theme }) => ({
   backgroundSize: "cover",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
-  position: "relative",
 
-  // padding: theme.spacing(1),
   [theme.breakpoints.down("md")]: {},
   [theme.breakpoints.up("md")]: {},
   [theme.breakpoints.up("lg")]: {},
 }));
 
-const PageContainer = styled(Container)({
-  // position: 'absolute',
-  // top: '50%',
-  // right: '50%',
-  // transform: 'translate(50%,-50%)',
-});
+const PageContainer = styled(Container)({});
 
-const LoginPage: FunctionComponent = () => {
+const LoginPage: FunctionComponent<ILoginPageActionProps & ILoginPageProps> = ({
+  login,
+  authenCode,
+  authenError,
+  authenIsFetching,
+}) => {
   const navigate = useNavigate();
-
-  const dispatch = useDispatch();
 
   const initFormMethod = useForm<ILoginForm>({
     mode: "onSubmit",
@@ -65,15 +61,24 @@ const LoginPage: FunctionComponent = () => {
     shouldUnregister: false,
   });
 
-  const { handleSubmit, control } = initFormMethod;
+  const { handleSubmit } = initFormMethod;
+
+  useEffect(() => {
+    if (authenIsFetching) {
+      if (authenCode === responseCode.OK) {
+        navigate("/");
+      } else {
+        console.log("HasError", authenError);
+      }
+    }
+  }, [authenIsFetching]);
 
   const onSubmit: SubmitHandler<ILoginForm> = (value) => {
     console.log("value", value);
-    dispatch(login(value));
+    login(value);
   };
 
-  const onErrors: SubmitErrorHandler<ILoginForm> = (error) => {
-  };
+  const onErrors: SubmitErrorHandler<ILoginForm> = (error) => {};
 
   return (
     <Brakepoints>

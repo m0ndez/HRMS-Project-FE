@@ -1,5 +1,5 @@
 import "./App.scss";
-import { Dashboard, Login, Layout } from "pages";
+import { Dashboard, Login, Layout, Loader } from "pages";
 import { Route, Routes } from "react-router-dom";
 import {
   createTheme,
@@ -14,6 +14,7 @@ function App() {
     palette: {
       mode: "light",
     },
+    zIndex: {},
     typography: {
       fontFamily: [
         "-apple-system",
@@ -36,6 +37,7 @@ function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
+        <Loader />
         <CssBaseline />
         <Routes>
           <Route element={<Login />} path={"/login"} />

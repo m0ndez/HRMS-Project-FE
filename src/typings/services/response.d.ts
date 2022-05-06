@@ -2,7 +2,8 @@ declare interface IResponse<T = any> {
     data: T
     code: number
     status?: number
-    devMessage: string
+    message: string
+    devMessage?: string
 }
 
 declare interface IPagination<T> {

@@ -1,8 +1,3 @@
-export interface ILoginForm {
-    username: string
-    password: string
-    // remember?: boolean
-}
 
 export interface IOptionsModel {
     label: string
@@ -53,4 +48,22 @@ export const initForm: ILoginModel[] = [
         readOnly: false,
         required: true,
     },
+    {
+        formCategory: 'login',
+        label: 'สิทธิการเข้าใช้ระบบ',
+        name: 'permission',
+        type: 'radio',
+        value: '',
+        options: [
+            {
+                label: 'ผู้ดูแลระบบ', value: 'admin'
+            },
+            {
+                label: 'พนักงาน', value: 'employee'
+            },
+        ],
+        readOnly: false,
+        required: true,
+    },
+
 ]
