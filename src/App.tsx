@@ -8,6 +8,7 @@ import {
   ThemeProvider,
   responsiveFontSizes,
 } from "@mui/material";
+import ProtectedRoutes from "contexts/ProtectedRoutes";
 
 function App() {
   let theme = createTheme({
@@ -40,9 +41,11 @@ function App() {
         <Loader />
         <CssBaseline />
         <Routes>
-          <Route element={<Login />} path={"/login"} />
-          <Route element={<Layout />}>
-            <Route element={<Dashboard />} index />
+          <Route path={"/login"} element={<Login />} />
+          <Route path="/" element={<ProtectedRoutes />}>
+            <Route element={<Layout />}>
+              <Route index element={<Dashboard />} />
+            </Route>
           </Route>
         </Routes>
       </ThemeProvider>

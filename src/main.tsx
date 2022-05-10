@@ -1,9 +1,11 @@
-import React from "react";
-import ReactDOM, { render } from "react-dom";
+// import React from "react";
+// interceptor({}, () => store);
+// import interceptor from "./configs/interceptor";
+
+import { render } from "react-dom";
 import "./index.css";
 import App from "./App";
 import { PersistGate } from "redux-persist/lib/integration/react";
-import interceptor from "./configs/interceptor";
 import configureStore from "./configs/store";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
@@ -14,9 +16,6 @@ console.log("Check Type Mode: ", import.meta.env.MODE);
 console.log("Check Type Prod: ", import.meta.env.PROD);
 
 const { store, persistor } = configureStore();
-
-
-interceptor({}, () => store);
 
 render(
   <Provider store={store}>

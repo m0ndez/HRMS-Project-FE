@@ -63,15 +63,15 @@ const LoginPage: FunctionComponent<ILoginPageActionProps & ILoginPageProps> = ({
 
   const { handleSubmit } = initFormMethod;
 
-  useEffect(() => {
-    if (authenIsFetching) {
-      if (authenCode === responseCode.OK) {
-        navigate("/");
-      } else {
-        console.log("HasError", authenError);
-      }
-    }
-  }, [authenIsFetching]);
+  // useEffect(() => {
+  //   if (authenIsFetching) {
+  //     if (authenCode === responseCode.OK) {
+  //       navigate("/");
+  //     } else {
+  //       console.log("HasError", authenError);
+  //     }
+  //   }
+  // }, [authenIsFetching]);
 
   const onSubmit: SubmitHandler<ILoginForm> = (value) => {
     console.log("value", value);

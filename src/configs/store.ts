@@ -1,10 +1,11 @@
-import axios from 'axios'
+// import axios from 'axios'
 import thunk from 'redux-thunk'
 import { persistStore } from 'redux-persist'
 import rootReducers from '../reduxs/reducers'
 import { composeWithDevTools } from '@redux-devtools/extension';
 import { applyMiddleware, Store, createStore } from 'redux';
 import axiosMiddleware from '../middleware/axios';
+import { axios } from 'utils';
 
 const enhancer = [axiosMiddleware, thunk.withExtraArgument(axios)]
 

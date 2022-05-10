@@ -16,12 +16,11 @@ const converter = (response: AxiosError<IResponse> | AxiosResponse<IResponse>): 
         const data: any = get(axiosResponse, 'data.data', {})
         return {
             code,
-            message: get(responseMessage, messageCode, constants.defaultError),
-            // devMessage: constants.defaultError,
+            message: '',
+            devMessage: get(responseMessage, messageCode, constants.defaultError),
             data,
         }
     } else {
-        // Error case
         const axiosResponse = response as AxiosError<IResponse>
         const messageCode: number = get(
             axiosResponse,
@@ -42,11 +41,12 @@ const converter = (response: AxiosError<IResponse> | AxiosResponse<IResponse>): 
                 get(axiosResponse, 'message', 0)
             )
         )
+        const message: string = get(axiosResponse, 'response.data.message', '')
         return {
             code,
             data,
-            message: get(responseMessage, messageCode, constants.defaultError),
-            // devMessage: constants.defaultError,
+            message: message,
+            devMessage: get(responseMessage, messageCode, constants.defaultError),
         }
 
     }

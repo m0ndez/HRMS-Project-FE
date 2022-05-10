@@ -11,7 +11,7 @@ declare interface IResponseAuthentication {
     address: string
     tel: string
     token: string
-    sex?: string
+    sex?: number
     postion?: string
     state?: boolean
 }

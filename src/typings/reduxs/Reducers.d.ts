@@ -3,7 +3,7 @@ declare interface ReducerState<T> {
     data: T
     error: string
     code: number
-    status: number
+    // status: number
 }
 
 declare interface RootReducers {

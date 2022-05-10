@@ -11,10 +11,6 @@ import { get } from 'lodash'
 import { Store } from 'redux'
 import { transformer, apiResponse } from '../utils'
 
-interface IAxiosDefaultHeader extends HeadersDefaults {
-    'Content-Type': string
-}
-
 const transformResponse: AxiosResponseTransformer = (data) => transformer.camelcaseTransform(JSON.parse(data))
 const transformRequest: AxiosRequestTransformer = (data) => JSON.stringify(transformer.snakecaseTransform(data))
 
@@ -25,6 +21,7 @@ const requestInterceptor = (config: AxiosRequestConfig): AxiosRequestConfig | Pr
         ...config,
         headers: {
             ...config.headers,
+            ['Content-Type']: 'application/json'
         },
         transformResponse,
         transformRequest,
@@ -37,39 +34,24 @@ const errorRequestHandler = (error: any) => Promise.reject(error)
 
 const responseInterceptor = (response: AxiosResponse<IResponse>): AxiosResponse<IResponse> => {
     const data = apiResponse.converter(response)
-    console.log('Interceptor', response)
+    console.log('Request Success', { ...response, data })
     return { ...response, data }
 }
 
 
 const errorResponseHandler = (_: Store) => (error: AxiosError<IResponse>) => {
     const errorResponse = apiResponse.converter(error)
-    const axiosResponse: AxiosResponse<IResponse> = get(error, 'response', {
-        data: errorResponse,
-        status: errorResponse.code,
-        statusText: errorResponse.devMessage,
-        headers: get(error, 'response.headers', {}),
-        config: get(error, 'response.config', {}),
-        request: get(error, 'response.request', {}),
-    })
-    const errorConverted: AxiosError<IResponse> = {
-        ...error,
-        response: axiosResponse,
-    }
-    return Promise.reject(errorConverted)
+    console.log('Request Error', errorResponse)
+    return Promise.reject(errorResponse)
 }
+
 
 const intercepterConfiguration = (config: any, store: any) => {
     axios.defaults.responseType = 'json'
     axios.defaults.baseURL = apiEnvironmentUrl
-    axios.defaults.headers = {
-        "Content-Type": 'application/json'
-    } as IAxiosDefaultHeader
-    // axios.defaults.headers['node'] = 'dipsy'
-    // axios.defaults.headers['Content-Type'] = 'application/json'
+    axios.defaults.timeout = 60000
     axios.interceptors.request.use(requestInterceptor, errorRequestHandler)
     axios.interceptors.response.use(responseInterceptor, errorResponseHandler(store))
-    axios.defaults.timeout = 60000
 
 }
 
