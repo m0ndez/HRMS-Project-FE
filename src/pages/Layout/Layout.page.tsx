@@ -14,6 +14,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { Outlet } from "react-router-dom";
+import { ListItemButton } from "@mui/material";
 
 const drawerWidth = 240;
 
@@ -42,12 +43,12 @@ const drawer = (
     <Divider />
     <List>
       {["All mail", "Trash", "Spam"].map((text, index) => (
-        <ListItem button key={text}>
+        <ListItemButton key={text} selected={index === 0} >
           <ListItemIcon>
             {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
           </ListItemIcon>
           <ListItemText primary={text} />
-        </ListItem>
+        </ListItemButton>
       ))}
     </List>
   </div>
@@ -64,7 +65,6 @@ const Layout: FunctionComponent<Props> = (props) => {
     window !== undefined ? () => window().document.body : undefined;
   return (
     <Box sx={{ display: "flex" }}>
-      {/* <CssBaseline /> */}
       <AppBar
         position="fixed"
         sx={{
@@ -84,7 +84,7 @@ const Layout: FunctionComponent<Props> = (props) => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Responsive drawer
+            Example Company
           </Typography>
         </Toolbar>
       </AppBar>
@@ -93,6 +93,7 @@ const Layout: FunctionComponent<Props> = (props) => {
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
         aria-label="mailbox folders"
       >
+
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
           container={container}

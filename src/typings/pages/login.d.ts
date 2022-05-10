@@ -13,6 +13,7 @@ declare interface ILoginPageProps {
 declare interface ILoginPageActionProps {
     login: (body: IRequestAuthentication) => void
     setLoading: (state: boolean) => void
+    openToast: (state: IToastComponentProps) => void
 }
 
 

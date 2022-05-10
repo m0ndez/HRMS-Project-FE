@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import { login } from "reduxs/authentication/actions";
 import { setLoading } from "reduxs/loader/action";
+import { openToast } from "reduxs/toast/action";
 import LoginPage from "./Login.page";
 import authenSelector from "../../reduxs/authentication/selector";
 
@@ -17,6 +18,7 @@ const mapStateToProps = (state: RootReducers): ILoginPageProps => {
 const mapDispatchToProps: ILoginPageActionProps = {
   login,
   setLoading,
+  openToast,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

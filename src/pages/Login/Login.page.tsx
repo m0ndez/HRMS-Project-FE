@@ -6,7 +6,7 @@ import {
   styled,
   Typography,
 } from "@mui/material";
-import { FunctionComponent, useEffect } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 import {
   FormProvider,
   SubmitErrorHandler,
@@ -15,17 +15,15 @@ import {
 } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { LoginForm } from "./Component";
-import "./login.style.scss";
 import { initForm } from "./Model";
 import { initCategory } from "./Model/interface";
 import LOGIN_BG from "assets/Images/Login/login-scr.jpg";
-import { login } from "reduxs/authentication/actions";
 import { noop } from "lodash";
 import { responseCode } from "constants/response";
+import "./login.style.scss";
 
 const constants = {
   title: "ยินดีต้อนรับเข้าสู่ระบบ HRMS",
-  rememberMe: "Remember Me",
   signInBtnLabel: "เข้าสู่ระบบ",
   remark: "หากเข้าสู่ระบบไม่ได้กรุณาติดต่อผู้ดูแลระบบ",
 };
@@ -34,7 +32,6 @@ const Brakepoints = styled("div")(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   minHeight: "100vh",
-  justifyContent: "center",
   backgroundImage: `url(${LOGIN_BG})`,
   backgroundSize: "cover",
   backgroundPosition: "center",
@@ -45,13 +42,17 @@ const Brakepoints = styled("div")(({ theme }) => ({
   [theme.breakpoints.up("lg")]: {},
 }));
 
-const PageContainer = styled(Container)({});
+const PageContainer = styled(Container)({
+  flexGrow: 1,
+  display: "flex",
+});
 
 const LoginPage: FunctionComponent<ILoginPageActionProps & ILoginPageProps> = ({
   login,
   authenCode,
-  authenError,
   authenIsFetching,
+  authenError,
+  openToast,
 }) => {
   const navigate = useNavigate();
 
@@ -63,18 +64,20 @@ const LoginPage: FunctionComponent<ILoginPageActionProps & ILoginPageProps> = ({
 
   const { handleSubmit } = initFormMethod;
 
-  // useEffect(() => {
-  //   if (authenIsFetching) {
-  //     if (authenCode === responseCode.OK) {
-  //       navigate("/");
-  //     } else {
-  //       console.log("HasError", authenError);
-  //     }
-  //   }
-  // }, [authenIsFetching]);
+  useEffect(() => {
+    if ([authenCode].includes(responseCode.OK)) {
+      openToast({ open: false });
+      navigate("/");
+    } else if (![0].includes(authenCode)) {
+      openToast({
+        open: true,
+        toastType: "error",
+        toastMessage: authenError,
+      });
+    }
+  }, [authenIsFetching]);
 
   const onSubmit: SubmitHandler<ILoginForm> = (value) => {
-    console.log("value", value);
     login(value);
   };
 
@@ -82,8 +85,9 @@ const LoginPage: FunctionComponent<ILoginPageActionProps & ILoginPageProps> = ({
 
   return (
     <Brakepoints>
+      {/* <RenderError /> */}
       <PageContainer maxWidth="xs">
-        <Grid container>
+        <Grid container sx={{ alignItems: "center" }}>
           <Grid item xs={12}>
             <Paper elevation={6}>
               <Grid container p={2}>
@@ -116,10 +120,8 @@ const LoginPage: FunctionComponent<ILoginPageActionProps & ILoginPageProps> = ({
                               );
                             }
                           )}
-                          {/* <LoginForm rememberWording={constants.rememberMe} /> */}
                         </form>
                       </FormProvider>
-                      {/* <RenderForm /> */}
                     </Grid>
                   </Grid>
                 </Grid>
@@ -130,6 +132,21 @@ const LoginPage: FunctionComponent<ILoginPageActionProps & ILoginPageProps> = ({
       </PageContainer>
     </Brakepoints>
   );
+};
+
+LoginPage.defaultProps = {
+  authenCode: 0,
+  authenError: "",
+  authenIsFetching: false,
+  login: () => {
+    noop();
+  },
+  openToast: () => {
+    noop();
+  },
+  setLoading: () => {
+    noop();
+  },
 };
 
 export default LoginPage;

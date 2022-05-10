@@ -9,6 +9,7 @@ import {
   responsiveFontSizes,
 } from "@mui/material";
 import ProtectedRoutes from "contexts/ProtectedRoutes";
+import { Toast } from "components";
 
 function App() {
   let theme = createTheme({
@@ -38,7 +39,6 @@ function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <Loader />
         <CssBaseline />
         <Routes>
           <Route path={"/login"} element={<Login />} />
@@ -49,6 +49,8 @@ function App() {
           </Route>
         </Routes>
       </ThemeProvider>
+      <Toast />
+      <Loader />
     </>
   );
 }
