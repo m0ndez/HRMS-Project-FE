@@ -61,8 +61,8 @@ const urlSearchParams = <T = any>(data: T): string => {
 
 const queryToObject = (query: string): any => {
   const urlParams = new URLSearchParams(query)
-  const entity = Object.fromEntries(urlParams)
-  return entity
+  // const entity = Object.fromEntries(urlParams)
+  return urlParams
 }
 
 const typeFormat = (data: string, spacing?: boolean) => {

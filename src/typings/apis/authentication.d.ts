@@ -6,14 +6,15 @@ declare interface IRequestAuthentication {
 
 declare interface IResponseAuthentication {
     id: string
-    firstname: string
-    lastname: string
+    fname: string
+    lname: string
     address: string
     tel: string
     token: string
     sex?: number
     postion?: string
     state?: boolean
+    permission: TPermission
 }
 
 declare interface IToken {

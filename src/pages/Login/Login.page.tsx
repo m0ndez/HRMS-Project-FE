@@ -85,11 +85,10 @@ const LoginPage: FunctionComponent<ILoginPageActionProps & ILoginPageProps> = ({
 
   return (
     <Brakepoints>
-      {/* <RenderError /> */}
       <PageContainer maxWidth="xs">
         <Grid container sx={{ alignItems: "center" }}>
           <Grid item xs={12}>
-            <Paper elevation={6}>
+            <Paper elevation={24}>
               <Grid container p={2}>
                 <Grid item xs={12}>
                   <Typography align="left" variant="h5" paddingBottom={3}>

@@ -1,0 +1,1 @@
+declare type TPermission = 'admin' | 'employee' | ''

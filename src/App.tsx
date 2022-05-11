@@ -1,5 +1,12 @@
 import "./App.scss";
-import { Dashboard, Login, Layout, Loader } from "pages";
+import {
+  Dashboard,
+  Login,
+  Layout,
+  Loader,
+  PageNotFound,
+  EmployeeReport,
+} from "pages";
 import { Route, Routes } from "react-router-dom";
 import {
   createTheme,
@@ -10,13 +17,17 @@ import {
 } from "@mui/material";
 import ProtectedRoutes from "contexts/ProtectedRoutes";
 import { Toast } from "components";
+import { useSelector } from "react-redux";
 
 function App() {
+  const { permission } = useSelector(
+    (state: RootReducers) => state.authentication.login.data
+  );
+
   let theme = createTheme({
     palette: {
       mode: "light",
     },
-    zIndex: {},
     typography: {
       fontFamily: [
         "-apple-system",
@@ -45,8 +56,14 @@ function App() {
           <Route path="/" element={<ProtectedRoutes />}>
             <Route element={<Layout />}>
               <Route index element={<Dashboard />} />
+              {["admin"].includes(permission) && (
+                <>
+                  <Route path="/report/employee" element={<EmployeeReport />} />
+                </>
+              )}
             </Route>
           </Route>
+          <Route path={"*"} element={<PageNotFound />} />
         </Routes>
       </ThemeProvider>
       <Toast />

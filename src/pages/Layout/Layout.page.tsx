@@ -1,21 +1,19 @@
-import { FunctionComponent, useState } from "react";
-import AppBar from "@mui/material/AppBar";
+import * as React from "react";
+import { Fragment, FunctionComponent, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
-import IconButton from "@mui/material/IconButton";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
 import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import MailIcon from "@mui/icons-material/Mail";
-import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import { Outlet } from "react-router-dom";
-import { ListItemButton } from "@mui/material";
-
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Collapse, ListItemButton } from "@mui/material";
+import { Appbar, DrawerListItem } from "components";
+import { debounce, get, isEmpty } from "lodash";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import { LIST_MENUS } from "constants/listMenus";
 const drawerWidth = 240;
 
 interface Props {
@@ -26,80 +24,111 @@ interface Props {
   window?: () => Window;
 }
 
-const drawer = (
-  <div>
-    <Toolbar />
-    <Divider />
-    <List>
-      {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-        <ListItem button key={text}>
-          <ListItemIcon>
-            {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-          </ListItemIcon>
-          <ListItemText primary={text} />
-        </ListItem>
-      ))}
-    </List>
-    <Divider />
-    <List>
-      {["All mail", "Trash", "Spam"].map((text, index) => (
-        <ListItemButton key={text} selected={index === 0} >
-          <ListItemIcon>
-            {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-          </ListItemIcon>
-          <ListItemText primary={text} />
-        </ListItemButton>
-      ))}
-    </List>
-  </div>
-);
+const Layout: FunctionComponent<
+  Props & ILayoutPageProps & ILayoutActionProps
+> = ({ authenData, window, logout }) => {
+  const currentLocation = useLocation();
+  const navigate = useNavigate();
 
-const Layout: FunctionComponent<Props> = (props) => {
-  const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [isCollapse, setCollapse] = useState<{ [key in string]: boolean }>({});
 
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
+  useEffect(() => {
+    initMenuCollapse();
+    return () => {
+      setCollapse({});
+    };
+  }, []);
+
+  const initMenuCollapse = () => {
+    try {
+      const tempVal: { [key in string]: boolean } = {};
+      Object.keys(LIST_MENUS).forEach((dl) => {
+        tempVal[dl] = true;
+      });
+      setCollapse(tempVal);
+    } catch (error) {
+      console.log("Error", error);
+    }
   };
+
+  const handleMenuCollapse = (cateMenu: string) => {
+    const createCollapse = {
+      ...isCollapse,
+      [cateMenu]: !isCollapse![cateMenu],
+    };
+    setCollapse(createCollapse);
+  };
+
+  const handleDrawerToggle = (manual?: boolean) => {
+    setMobileOpen(!manual ? !mobileOpen : false);
+  };
+
+  const handleNavigate = (path?: string, manual?: boolean) => {
+    if (path) {
+      debounce(() => {
+        handleDrawerToggle(manual);
+      }, 128)();
+      navigate(path);
+    } else {
+      return;
+    }
+  };
+
   const container =
     window !== undefined ? () => window().document.body : undefined;
+
+  const handleInitMenuByPermission = (): TMenuConstants => {
+    let converted: TMenuConstants = {};
+    Object.keys(LIST_MENUS).forEach((headerItem) => {
+      if (
+        ["", authenData.permission].includes(LIST_MENUS[headerItem].permission)
+      ) {
+        converted[headerItem] = { ...LIST_MENUS[headerItem] };
+      }
+    });
+    return converted;
+  };
+
+  const handleLogout = () => {
+    logout()
+    handleNavigate('/login', true)
+  };
+
   return (
-    <Box sx={{ display: "flex" }}>
-      <AppBar
-        position="fixed"
-        sx={{
-          zIndex: (theme) => theme.zIndex.drawer + 1,
-          // width: { sm: `calc(100% - ${drawerWidth}px)` },
-          // ml: { sm: `${drawerWidth}px` },
-        }}
-      >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: "none" } }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Example Company
-          </Typography>
-        </Toolbar>
-      </AppBar>
+    <Appbar
+      displayName={[authenData.fname, authenData.lname].join(" ")}
+      headerName="Example Company"
+      isOpen={mobileOpen}
+      toggleOpen={handleDrawerToggle}
+      settingCallback={[
+        {
+          name: "จัดการผู้ใช้",
+          func: () => {
+            handleNavigate("/report/employee", true);
+          },
+        },
+        {
+          name: "ออกจากระบบ",
+          func: () => {
+            handleLogout();
+          },
+        },
+      ]}
+    >
+      {/* Role Handle */}
       <Box
         component="nav"
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-        aria-label="mailbox folders"
+        aria-label="menu folders"
       >
-
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+        {/* Mobile */}
         <Drawer
           container={container}
           variant="temporary"
           open={mobileOpen}
-          onClose={handleDrawerToggle}
+          onClose={() => handleDrawerToggle()}
           ModalProps={{
             keepMounted: true, // Better open performance on mobile.
           }}
@@ -111,8 +140,15 @@ const Layout: FunctionComponent<Props> = (props) => {
             },
           }}
         >
-          {drawer}
+          <DrawerListItem
+            collapState={isCollapse}
+            collapseCB={handleMenuCollapse}
+            currentPath={currentLocation.pathname}
+            menuConstants={handleInitMenuByPermission()}
+            navigateCB={handleNavigate}
+          />
         </Drawer>
+        {/* Desktop */}
         <Drawer
           variant="permanent"
           sx={{
@@ -124,7 +160,13 @@ const Layout: FunctionComponent<Props> = (props) => {
           }}
           open
         >
-          {drawer}
+          <DrawerListItem
+            collapState={isCollapse}
+            collapseCB={handleMenuCollapse}
+            currentPath={currentLocation.pathname}
+            menuConstants={handleInitMenuByPermission()}
+            navigateCB={handleNavigate}
+          />
         </Drawer>
       </Box>
       <Box
@@ -138,7 +180,7 @@ const Layout: FunctionComponent<Props> = (props) => {
         <Toolbar />
         <Outlet />
       </Box>
-    </Box>
+    </Appbar>
   );
 };
 
