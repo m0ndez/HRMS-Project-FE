@@ -4,6 +4,7 @@ import storage from "redux-persist/lib/storage";
 import authentication from "./authentication/reducers";
 import { loader } from "./loader/reducer";
 import { toast } from "./toast/reducer";
+import user from "./user/reducers";
 const persistConfig = {
   key: import.meta.env.VITE_ENVIRONMENT_NAME,
   storage,
@@ -19,6 +20,7 @@ const rootReducer = {
   authentication: persistReducer(authenPersistConfig, authentication),
   loader,
   toast,
+  user,
 };
 
 export default persistReducer(persistConfig, combineReducers(rootReducer));

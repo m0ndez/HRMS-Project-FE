@@ -70,12 +70,12 @@ export default (({
                         <ListItemButton
                           sx={{ pl: 4 }}
                           key={`collapse-${listItem.label}-${indexItem}`}
-                          selected={[listItem.path].includes(currentPath)}
+                          selected={currentPath.startsWith(listItem.path)}
                           onClick={() => navigateCB(listItem.path)}
                         >
                           <ListItemIcon
                             sx={({ palette }) => ({
-                              color: [listItem.path].includes(currentPath)
+                              color: currentPath.startsWith(listItem.path)
                                 ? palette.primary.main
                                 : palette.action.active,
                             })}

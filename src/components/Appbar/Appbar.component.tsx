@@ -101,6 +101,9 @@ export default (({
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Toolbar disableGutters>
+              <Typography variant="body1" noWrap component="div" sx={{ display: { xs: "none", sm: "block" } }}>
+                {displayName}
+              </Typography>
               <Tooltip title={constants.openSetting}>
                 <IconButton onClick={handleOpenUserMenu}>
                   <Avatar {...stringAvatar(displayName)} />

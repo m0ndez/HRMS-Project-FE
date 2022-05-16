@@ -10,14 +10,13 @@ declare interface IResponseAuthentication {
     lname: string
     address: string
     tel: string
-    token: string
     sex?: number
-    postion?: string
+    position?: string
     state?: boolean
     permission: TPermission
 }
 
 declare interface IToken {
-    accessToken: string
+    token: string
     refreshToken?: string
 }

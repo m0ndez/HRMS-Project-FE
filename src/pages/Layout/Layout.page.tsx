@@ -1,19 +1,13 @@
 import * as React from "react";
-import { Fragment, FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
 import Toolbar from "@mui/material/Toolbar";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { Collapse, ListItemButton } from "@mui/material";
-import { Appbar, DrawerListItem } from "components";
-import { debounce, get, isEmpty } from "lodash";
-import ExpandLess from "@mui/icons-material/ExpandLess";
-import ExpandMore from "@mui/icons-material/ExpandMore";
+import { Appbar, Breadcrumb, DrawerListItem } from "components";
+import { debounce } from "lodash";
 import { LIST_MENUS } from "constants/listMenus";
+
 const drawerWidth = 240;
 
 interface Props {
@@ -91,8 +85,8 @@ const Layout: FunctionComponent<
   };
 
   const handleLogout = () => {
-    logout()
-    handleNavigate('/login', true)
+    logout();
+    handleNavigate("/login", true);
   };
 
   return (
@@ -105,7 +99,7 @@ const Layout: FunctionComponent<
         {
           name: "จัดการผู้ใช้",
           func: () => {
-            handleNavigate("/report/employee", true);
+            handleNavigate("/report/employees", true);
           },
         },
         {
@@ -177,7 +171,12 @@ const Layout: FunctionComponent<
           width: { sm: `calc(100% - ${drawerWidth}px)` },
         }}
       >
-        <Toolbar />
+        <Toolbar variant="regular" />
+        <Breadcrumb
+          currentPath={currentLocation.pathname}
+          onNavigateCB={(path) => handleNavigate(path, true)}
+        />
+
         <Outlet />
       </Box>
     </Appbar>

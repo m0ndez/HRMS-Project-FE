@@ -14,7 +14,6 @@ export const loginState: ReducerState<IResponseAuthentication> = {
     id: "",
     lname: "",
     tel: "",
-    token: "",
     permission: "",
   },
   error: "",
@@ -22,6 +21,6 @@ export const loginState: ReducerState<IResponseAuthentication> = {
 };
 
 export const tokenState: IToken = {
-  accessToken: "",
+  token: "",
   refreshToken: "",
 };

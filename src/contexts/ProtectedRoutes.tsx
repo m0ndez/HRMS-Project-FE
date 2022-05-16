@@ -4,7 +4,7 @@ import { Navigate, Outlet } from "react-router-dom";
 
 const useAuth = () => {
   const refToken = useSelector<RootReducers>(
-    (e) => e.authentication.login.data.token
+    (e) => e.authentication.token.token
   );
   return !isEmpty(refToken);
 };

@@ -9,7 +9,7 @@ export const toastState: IToastStore = {
         },
         toastType: "success",
         toastMessage: "Success !",
-        toastDuration: 6000,
+        toastDuration: 3000,
         open: false,
     }
 }

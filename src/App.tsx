@@ -6,12 +6,16 @@ import {
   Loader,
   PageNotFound,
   EmployeeReport,
+  LeaveReport,
+  ManageEmployee,
+  EmployeeForm,
+  ManageUser,
+  ChangePassword,
 } from "pages";
 import { Route, Routes } from "react-router-dom";
 import {
   createTheme,
   CssBaseline,
-  useMediaQuery,
   ThemeProvider,
   responsiveFontSizes,
 } from "@mui/material";
@@ -56,9 +60,28 @@ function App() {
           <Route path="/" element={<ProtectedRoutes />}>
             <Route element={<Layout />}>
               <Route index element={<Dashboard />} />
+              <Route path="/user" element={<ManageUser />} />
+              <Route path="/changepassword" element={<ChangePassword />} />
+
               {["admin"].includes(permission) && (
                 <>
-                  <Route path="/report/employee" element={<EmployeeReport />} />
+                  <Route
+                    path="/report/employees"
+                    element={<EmployeeReport />}
+                  />
+                  <Route path="/report/leaves" element={<LeaveReport />} />
+                  <Route
+                    path="/manage/employees"
+                    element={<ManageEmployee />}
+                  />
+                  <Route
+                    path="/manage/employees/create"
+                    element={<EmployeeForm />}
+                  />
+                  <Route
+                    path="/manage/employees/edit/:id"
+                    element={<EmployeeForm />}
+                  />
                 </>
               )}
             </Route>

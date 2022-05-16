@@ -1,6 +1,7 @@
 const apis = {
     mock : 'localhost',
-    authen: 'login'
+    authen: 'login',
+    user: 'user'
 }
 
 export default apis

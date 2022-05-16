@@ -9,7 +9,7 @@ export const LIST_MENUS: TMenuConstants = {
   dashboard: {
     permission: "",
     icon: <DashboardIcon />,
-    label: "ยืนยันการทำงาน",
+    label: "หน้าหลัก",
     nestingList: [],
     path: "/",
   },
@@ -40,6 +40,11 @@ export const LIST_MENUS: TMenuConstants = {
         icon: <ContactPageIcon />,
         path: "/user",
       },
+      {
+        label: "เปลี่ยนรหัสผ่าน",
+        icon: <ContactPageIcon />,
+        path: "/changepassword",
+      },
     ],
   },
   management: {
@@ -50,12 +55,7 @@ export const LIST_MENUS: TMenuConstants = {
       {
         label: "พนักงาน",
         icon: <ContactPageIcon />,
-        path: "/manage/employee",
-      },
-      {
-        label: "อนุมัติการลา",
-        icon: <ContactPageIcon />,
-        path: "/manage/timesheet",
+        path: "/manage/employees",
       },
     ],
   },
@@ -67,12 +67,12 @@ export const LIST_MENUS: TMenuConstants = {
       {
         label: "รายงานพนักงาน",
         icon: <ContactPageIcon />,
-        path: "/report/employee",
+        path: "/report/employees",
       },
       {
         label: "รายงานการลางาน",
         icon: <ContactPageIcon />,
-        path: "/user",
+        path: "/report/leaves",
       },
     ],
   },
