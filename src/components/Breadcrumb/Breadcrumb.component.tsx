@@ -10,7 +10,9 @@ const instantceLabel: { [key in string]: string } = {
   create: "สร้าง",
   manage: "การจัดการ",
   edit: "แก้ไข",
-  changepassword: 'เปลี่ยนรหัสผ่าน',
+  changepassword: "เปลี่ยนรหัสผ่าน",
+  timesheet: "บันทึกเวลางาน",
+  leavesheet: "บันทึกการลางาน",
   "": "หน้าหลัก",
 };
 

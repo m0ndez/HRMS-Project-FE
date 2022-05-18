@@ -1,6 +1,21 @@
 import { ESCAPED_TIMEZONE } from "constants/regex";
-import { format } from "date-fns";
+import { format, formatISO9075 } from "date-fns";
+import { th } from "date-fns/locale";
 import { get, isEmpty } from "lodash";
+
+const formatDate = (data: string) => {
+  return format(new Date(data), "dd MMM yyyy", { locale: th });
+};
+
+const formatDateToApi = (
+  mode: "complete" | "date" | "time" | undefined,
+  data: string | number | Date
+) => {
+  const createData = formatISO9075(new Date(data), {
+    representation: mode,
+  });
+  return createData;
+};
 
 const calibratingTime = (
   timeasString?: string,
@@ -61,6 +76,8 @@ const calibratingTime = (
 
 const dateUtils = {
   calibratingTime,
+  formatDate,
+  formatDateToApi,
 };
 
 export default dateUtils;

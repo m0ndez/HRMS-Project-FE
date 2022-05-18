@@ -4,7 +4,11 @@ import BorderColorIcon from "@mui/icons-material/BorderColor";
 import AvTimerIcon from "@mui/icons-material/AvTimer";
 import ContactPageIcon from "@mui/icons-material/ContactPage";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-
+import SyncLockIcon from '@mui/icons-material/SyncLock';
+import ContactMailIcon from '@mui/icons-material/ContactMail';
+import PeopleAltRoundedIcon from '@mui/icons-material/PeopleAltRounded';
+import AssessmentRoundedIcon from '@mui/icons-material/AssessmentRounded';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 export const LIST_MENUS: TMenuConstants = {
   dashboard: {
     permission: "",
@@ -32,29 +36,29 @@ export const LIST_MENUS: TMenuConstants = {
   },
   users: {
     permission: "",
-    icon: <GroupIcon />,
+    icon: <ManageAccountsIcon />,
     label: "ข้อมูลผู้ใช้",
     nestingList: [
       {
         label: "จัดการข้อมูล",
-        icon: <ContactPageIcon />,
+        icon: <ContactMailIcon />,
         path: "/user",
       },
       {
         label: "เปลี่ยนรหัสผ่าน",
-        icon: <ContactPageIcon />,
+        icon: <SyncLockIcon />,
         path: "/changepassword",
       },
     ],
   },
   management: {
     permission: "admin",
-    icon: <GroupIcon />,
+    icon: <ManageAccountsIcon />,
     label: "การจัดการ",
     nestingList: [
       {
         label: "พนักงาน",
-        icon: <ContactPageIcon />,
+        icon: <PeopleAltRoundedIcon />,
         path: "/manage/employees",
       },
     ],
@@ -66,12 +70,12 @@ export const LIST_MENUS: TMenuConstants = {
     nestingList: [
       {
         label: "รายงานพนักงาน",
-        icon: <ContactPageIcon />,
+        icon: <AssessmentRoundedIcon />,
         path: "/report/employees",
       },
       {
         label: "รายงานการลางาน",
-        icon: <ContactPageIcon />,
+        icon: <AssessmentRoundedIcon />,
         path: "/report/leaves",
       },
     ],

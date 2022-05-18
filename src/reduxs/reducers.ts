@@ -5,6 +5,8 @@ import authentication from "./authentication/reducers";
 import { loader } from "./loader/reducer";
 import { toast } from "./toast/reducer";
 import user from "./user/reducers";
+import timesheet from "./timesheet/reducers";
+import leavesheet from "./leavesheet/reducers";
 const persistConfig = {
   key: import.meta.env.VITE_ENVIRONMENT_NAME,
   storage,
@@ -21,6 +23,8 @@ const rootReducer = {
   loader,
   toast,
   user,
+  timesheet,
+  leavesheet,
 };
 
 export default persistReducer(persistConfig, combineReducers(rootReducer));

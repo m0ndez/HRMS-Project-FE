@@ -51,8 +51,6 @@ const LoginPage: FunctionComponent<ILoginPageActionProps & ILoginPageProps> = ({
   login,
   authenCode,
   authenIsFetching,
-  authenError,
-  openToast,
 }) => {
   const navigate = useNavigate();
 
@@ -66,14 +64,7 @@ const LoginPage: FunctionComponent<ILoginPageActionProps & ILoginPageProps> = ({
 
   useEffect(() => {
     if ([authenCode].includes(responseCode.OK)) {
-      openToast({ open: false });
       navigate("/");
-    } else if (![0].includes(authenCode)) {
-      openToast({
-        open: true,
-        toastType: "error",
-        toastMessage: authenError,
-      });
     }
   }, [authenIsFetching]);
 

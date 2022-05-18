@@ -7,7 +7,9 @@ import { EmployeeReport } from "./EmployeeReport";
 import { LeaveReport } from "./LeaveReport";
 import { ManageEmployee, EmployeeForm } from "./ManageEmployee";
 import { ManageUser } from "./ManageUser";
-import { ChangePassword } from './ChangePassword'
+import { ChangePassword } from "./ChangePassword";
+import { TimeSheet, TimeSheetForm } from "./TimeSheet";
+import { Leave, LeaveForm } from "./Leave";
 
 export {
   Login,
@@ -20,5 +22,9 @@ export {
   ManageEmployee,
   EmployeeForm,
   ManageUser,
-  ChangePassword
+  ChangePassword,
+  TimeSheet,
+  TimeSheetForm,
+  Leave,
+  LeaveForm,
 };

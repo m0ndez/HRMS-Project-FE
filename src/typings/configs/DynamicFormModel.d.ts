@@ -2,18 +2,23 @@ declare interface IDynamicFormModel {
   formCategory: string;
   label: string;
   name: string;
-  value: string | number | boolean;
+  value: string | number | boolean | Date;
   type: string;
   required: boolean;
   readOnly: boolean;
   options?: IDynamicOptions<optionType>[];
-  preflixIcon?: JSX.Element
-  postflixIcon?: JSX.Element
-  grid?: number
-  hideLabel?: boolean
-  compareValue?: string
-  duplicateCheck?: string
-  minLength?: number
+  preflixIcon?: JSX.Element;
+  postflixIcon?: JSX.Element;
+  grid?: number;
+  hideLabel?: boolean;
+  compareValue?: string;
+  duplicateCheck?: string;
+  minLength?: number;
+  numberMin?: number;
+  numberMax?: number;
+  minDateKey?: string;
+  maxDateKey?: string;
+  autoFocus?: boolean
 }
 
 declare interface IDynamicOptions {
@@ -25,6 +30,7 @@ declare type IDynamicCategory = {
   [key in string]: {
     name: string;
     label: string;
+    pageMode?: string
   };
 };
 

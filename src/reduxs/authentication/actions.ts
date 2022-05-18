@@ -4,6 +4,7 @@ import { loginAction, tokenAction } from "./actionCreators";
 import { loginState } from "./constants";
 import { fetchLogin } from "./services";
 import cryptoJs from "crypto-js";
+import { toastAction } from "reduxs/toast/actionCreator";
 
 const login = (body: IRequestAuthentication) => async (dispatch: Dispatch) => {
   dispatch(loginAction.request({}));
@@ -27,9 +28,16 @@ const login = (body: IRequestAuthentication) => async (dispatch: Dispatch) => {
         ...error,
         data: loginState.data,
       };
-      dispatch(loaderAction(false));
-      console.log("Response From Action", errorHandler);
+      dispatch(
+        toastAction({
+          open: true,
+          toastType: "error",
+          toastMessage: error.message || error.devMessage,
+          toastDuration: 3000,
+        })
+      );
       dispatch(loginAction.failure(errorHandler));
+      dispatch(loaderAction(false));
     })
     .finally(() => dispatch(loaderAction(false)));
 };

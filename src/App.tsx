@@ -11,49 +11,26 @@ import {
   EmployeeForm,
   ManageUser,
   ChangePassword,
+  TimeSheet,
+  TimeSheetForm,
+  Leave,
+  LeaveForm,
 } from "pages";
 import { Route, Routes } from "react-router-dom";
-import {
-  createTheme,
-  CssBaseline,
-  ThemeProvider,
-  responsiveFontSizes,
-} from "@mui/material";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import ProtectedRoutes from "contexts/ProtectedRoutes";
 import { Toast } from "components";
 import { useSelector } from "react-redux";
+import { theme } from "configs/themeProvider";
 
 function App() {
   const { permission } = useSelector(
     (state: RootReducers) => state.authentication.login.data
   );
 
-  let theme = createTheme({
-    palette: {
-      mode: "light",
-    },
-    typography: {
-      fontFamily: [
-        "-apple-system",
-        "BlinkMacSystemFont",
-        '"Segoe UI"',
-        "Roboto",
-        "Kanit",
-        '"Helvetica Neue"',
-        "Arial",
-        "sans-serif",
-        '"Apple Color Emoji"',
-        '"Segoe UI Emoji"',
-        '"Segoe UI Symbol"',
-      ].join(","),
-    },
-  });
-
-  theme = responsiveFontSizes(theme);
-
   return (
     <>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={theme("light")}>
         <CssBaseline />
         <Routes>
           <Route path={"/login"} element={<Login />} />
@@ -62,6 +39,14 @@ function App() {
               <Route index element={<Dashboard />} />
               <Route path="/user" element={<ManageUser />} />
               <Route path="/changepassword" element={<ChangePassword />} />
+
+              <Route path="/timesheet" element={<TimeSheet />} />
+              <Route path="/timesheet/create" element={<TimeSheetForm />} />
+              <Route path="/timesheet/edit/:id" element={<TimeSheetForm />} />
+
+              <Route path="/leavesheet" element={<Leave />} />
+              <Route path="/leavesheet/create" element={<LeaveForm />} />
+              <Route path="/leavesheet/edit/:id" element={<LeaveForm />} />
 
               {["admin"].includes(permission) && (
                 <>

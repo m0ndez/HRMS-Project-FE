@@ -28,8 +28,16 @@ import {
   useFormContext,
 } from "react-hook-form";
 
+import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import thLocale from "date-fns/locale/th";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import { isValid } from "date-fns";
+import { get } from "lodash";
+
 interface props {
   contextItems: IDynamicFormModel[];
+  setDisabled?: boolean;
 }
 
 const constants = {
@@ -37,13 +45,21 @@ const constants = {
   compared: (label: string = "") => `ข้อมูลไม่ตรงกับ ${label} **`,
   duplicate: (label: string = "") => `ข้อมูลห้ามตรงกับ ${label} **`,
   minLength: (label: string = "") => `ต้องมีตัวอักษรอย่างน้อย ${label} ตัว **`,
+  invalidDate: (label: string = "") => `ข้อมูล ${label} ไม่ถูกต้อง **`,
+  minNumber: (label: string = "", num: number) =>
+    `จำนวน ${label} ห้ามเกิน ${num}`,
+  maxNumber: (label: string = "", num: number) =>
+    `จำนวน ${label} ต้องไม่ต่ำกว่า ${num}`,
 };
 
-export default <T,>({ contextItems }: props): JSX.Element => {
+export default <T,>({
+  contextItems,
+  setDisabled = false,
+}: props): JSX.Element => {
   const [showPassword, setShowPassword] = useState<{
     [key in string]: boolean;
   }>({});
-  const { control, watch } = useFormContext<T>();
+  const { control, watch, getValues } = useFormContext<T>();
   return (
     <>
       {contextItems.map((row, key) => {
@@ -61,6 +77,11 @@ export default <T,>({ contextItems }: props): JSX.Element => {
           compareValue,
           duplicateCheck,
           minLength,
+          numberMax,
+          numberMin,
+          readOnly,
+          minDateKey,
+          autoFocus,
         } = row;
         const rules: Exclude<
           RegisterOptions,
@@ -85,9 +106,22 @@ export default <T,>({ contextItems }: props): JSX.Element => {
             value: minLength,
             message: constants.minLength(minLength.toString()),
           };
+        if (["date", "datetime"].includes(type))
+          rules.validate = (date) =>
+            isValid(date) || constants.invalidDate(label);
+        if (numberMin)
+          rules.min = {
+            value: numberMin,
+            message: constants.minNumber(label, numberMin),
+          };
+        if (numberMax)
+          rules.max = {
+            value: numberMax,
+            message: constants.maxNumber(label, numberMax),
+          };
 
         return (
-          <Grid item xs={grid ? grid : 12} key={`field-${label}-${key}`}>
+          <Grid item xs={12} sm={grid ? grid : 12} key={`field-${label}-${key}`}>
             {["text", "number", "textarea"].includes(type) && (
               <Controller
                 name={name as FieldPath<T>}
@@ -103,12 +137,14 @@ export default <T,>({ contextItems }: props): JSX.Element => {
                     <TextField
                       fullWidth
                       ref={ref}
-                      autoFocus
+                      autoFocus={autoFocus}
                       id={`${formCategory}-${name}`}
+                      disabled={setDisabled || readOnly}
                       name={name}
                       type={type}
                       value={value}
                       placeholder={label}
+                      autoComplete={"off"}
                       onBlur={onBlur}
                       onChange={onChange}
                       error={Boolean(error)}
@@ -116,19 +152,19 @@ export default <T,>({ contextItems }: props): JSX.Element => {
                       helperText={error?.message}
                       multiline={["textarea"].includes(type)}
                       rows={4}
-                      InputProps={
-                        preflixIcon
-                          ? {
-                              startAdornment: (
-                                <InputAdornment position="start">
-                                  <AccountCircle
-                                    color={Boolean(error) ? "error" : undefined}
-                                  />
-                                </InputAdornment>
-                              ),
-                            }
-                          : undefined
-                      }
+                      InputProps={{
+                        startAdornment: preflixIcon && (
+                          <InputAdornment position="start">
+                            <AccountCircle
+                              color={Boolean(error) ? "error" : undefined}
+                            />
+                          </InputAdornment>
+                        ),
+                        inputProps: {
+                          // min: numberMin,
+                          // max: numberMax,
+                        },
+                      }}
                       variant={"outlined"}
                     />
                   );
@@ -152,7 +188,9 @@ export default <T,>({ contextItems }: props): JSX.Element => {
                       ref={ref}
                       fullWidth
                       id={`${formCategory}-${name}`}
+                      disabled={setDisabled || readOnly}
                       name={name}
+                      autoComplete={"off"}
                       type={showPassword[name] ? "text" : type}
                       value={value}
                       placeholder={label}
@@ -211,7 +249,10 @@ export default <T,>({ contextItems }: props): JSX.Element => {
                   const { name, onBlur, onChange, ref, value } = field;
                   const { error } = fieldState;
                   return (
-                    <FormControl error={Boolean(error)}>
+                    <FormControl
+                      error={Boolean(error)}
+                      disabled={setDisabled || readOnly}
+                    >
                       {!hideLabel && (
                         <FormLabel id={`radio-buttons-group-label-${key}`}>
                           <Typography children={label} variant={"body2"} />
@@ -260,7 +301,11 @@ export default <T,>({ contextItems }: props): JSX.Element => {
                   const { name, onBlur, onChange, ref, value } = field;
                   const { error } = fieldState;
                   return (
-                    <FormControl error={Boolean(error)} fullWidth>
+                    <FormControl
+                      error={Boolean(error)}
+                      fullWidth
+                      disabled={setDisabled || readOnly}
+                    >
                       {!hideLabel && (
                         <FormLabel id={`radio-buttons-group-label-${key}`}>
                           <Typography children={label} variant={"body2"} />
@@ -286,6 +331,68 @@ export default <T,>({ contextItems }: props): JSX.Element => {
                         ))}
                       </Select>
                       <FormHelperText>{error?.message}</FormHelperText>
+                    </FormControl>
+                  );
+                }}
+              />
+            )}
+            {["date"].includes(type) && (
+              <Controller
+                name={name as FieldPath<T>}
+                defaultValue={
+                  value as UnpackNestedValue<PathValue<T, Path<T>>> | undefined
+                }
+                control={control}
+                rules={rules}
+                render={({ field, fieldState }) => {
+                  const { name, onBlur, onChange, ref, value } = field;
+                  const { error } = fieldState;
+                  const handleMinDate = Boolean(
+                    getValues(minDateKey as Path<T>)
+                  );
+                  
+                  const setNextDate = minDateKey
+                    ? new Date().setDate(
+                        new Date(
+                          get(watch(), minDateKey, new Date().toString())
+                        ).getDate() + 1
+                      )
+                    : undefined;
+
+                  return (
+                    <FormControl fullWidth>
+                      <LocalizationProvider
+                        dateAdapter={AdapterDateFns}
+                        locale={thLocale}
+                      >
+                        <DesktopDatePicker
+                          disabled={setDisabled || readOnly || !handleMinDate}
+                          onChange={onChange}
+                          minDate={setNextDate}
+                          value={new Date(value as string)}
+                          PaperProps={{ elevation: 14 }}
+                          renderInput={(params) => (
+                            <TextField
+                              ref={ref}
+                              {...params}
+                              inputProps={{
+                                ...params.inputProps,
+                                placeholder: label,
+                              }}
+                              autoComplete={"off"}
+                              id={`${formCategory}-${name}`}
+                              autoFocus={autoFocus}
+                              name={name}
+                              placeholder={label}
+                              onBlur={onBlur}
+                              error={Boolean(error)}
+                              label={!hideLabel && label}
+                              helperText={error?.message}
+                              variant={"outlined"}
+                            />
+                          )}
+                        />
+                      </LocalizationProvider>
                     </FormControl>
                   );
                 }}

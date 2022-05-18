@@ -19,7 +19,20 @@ const constants = {
   backBtn: "ย้อนกลับ",
 };
 
-export default (() => {
+export default (({
+  clearCreateLeavesheet = () => {
+    noop();
+  },
+  createLeavesheet = () => {
+    noop();
+  },
+  createLeavesheetData = {
+    leaveId: "",
+  },
+  createLeavesheetCode = 0,
+  createLeavesheetError = "",
+  createLeavesheetIsFetching = false,
+}) => {
   const [disableForm, setDisableForm] = React.useState(false);
   const navigate = useNavigate();
   const pageMode = useLocation().state as {
@@ -27,7 +40,17 @@ export default (() => {
     id: string | undefined;
   };
 
-  const initFormMethod = useForm<IEmployeeManagementForm>({
+  // Create Flow
+  React.useEffect(() => {
+    if ([responseCode.OK].includes(createLeavesheetCode)) {
+      navigate(-1);
+    }
+    return () => {
+      clearCreateLeavesheet();
+    };
+  }, [createLeavesheetCode]);
+
+  const initFormMethod = useForm<ILeaveForm>({
     mode: "onSubmit",
     reValidateMode: "onChange",
     shouldUnregister: false,
@@ -35,33 +58,37 @@ export default (() => {
 
   const { handleSubmit, setValue } = initFormMethod;
 
-  const onSubmit: SubmitHandler<IEmployeeManagementForm> = (value) => {
+  const handleCreateLeavesheet = (value: IRequestCreateLeavesheet) => {
+    createLeavesheet(value);
+  };
+
+  const handleUpdateLeavesheet = (value: IRequestUpdateLeavesheet) => {
+    // updateTimesheet(value);
+  };
+
+  const onSubmit: SubmitHandler<ILeaveForm> = (value) => {
     const convertedValue: {
-      [key in keyof IEmployeeManagementForm]:
-        | string
-        | number
-        | Date
-        | undefined;
+      [key in keyof ILeaveForm]: string | number | Date;
     } = {
       ...value,
     };
     initForm.forEach((formItem) => {
       Object.keys(convertedValue).map((keyItem) => {
-        if ((formItem.name as keyof IEmployeeManagementForm) === keyItem) {
+        if ((formItem.name as keyof ILeaveForm) === keyItem) {
           convertedValue[keyItem] =
             formItem.type === "date"
-              ? dateUtils.formatDateToApi("date", convertedValue[keyItem]!)
+              ? dateUtils.formatDateToApi("date", convertedValue[keyItem])
               : convertedValue[keyItem];
         }
       });
     });
     console.log(convertedValue);
-    pageMode.mode === "create";
-    //   ? handleCreateLeavesheet(convertedValue as IRequestCreateLeavesheet)
-    //   : handleUpdateLeavesheet(convertedValue as IRequestUpdateLeavesheet);
+    pageMode.mode === "create"
+      ? handleCreateLeavesheet(convertedValue as IRequestCreateLeavesheet)
+      : handleUpdateLeavesheet(convertedValue as IRequestUpdateLeavesheet);
   };
 
-  const onErrors: SubmitErrorHandler<IEmployeeManagementForm> = (error) => {};
+  const onErrors: SubmitErrorHandler<ILeaveForm> = (error) => {};
 
   return (
     <Grid container spacing={4}>
@@ -98,7 +125,7 @@ export default (() => {
                             children={initCategory[cateName].label}
                           />
                         </Grid>
-                        <DynamicForm<IEmployeeManagementForm>
+                        <DynamicForm<ILeaveForm>
                           contextItems={cateItems}
                           setDisabled={disableForm}
                         />
@@ -142,4 +169,6 @@ export default (() => {
       </Grid>
     </Grid>
   );
-}) as React.FunctionComponent;
+}) as React.FunctionComponent<
+  ILeaveFormComponentProps & ILeaveFormComponentActionProps
+>;
