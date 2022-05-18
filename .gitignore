@@ -11,8 +11,6 @@ node_modules
 dist
 dist-ssr
 *.local
-*.staging
-*.production
 
 # Editor directories and files
 .vscode/*
@@ -25,3 +23,5 @@ dist-ssr
 *.sln
 *.sw?
 yarn.lock
+.env.staging
+.env.production
