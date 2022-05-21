@@ -24,3 +24,13 @@ declare interface IResponseGetLeavesheet {
   leaveApproved: boolean;
   leaveCreatedBy?: string;
 }
+
+declare interface IResponseGetLeaveApprove {
+  leaveId: string;
+  leaveCreated: string;
+  leaveStart: string;
+  leaveEnd: string;
+  leaveRemark: string;
+  leaveApproved: boolean;
+  leaveFullname: string;
+}

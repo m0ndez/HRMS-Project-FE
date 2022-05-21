@@ -3,6 +3,7 @@ import {
   createLeavesheetState,
   leavesheetState,
   leavesheetDeleteStatusState,
+  leaveApproveState,
   leavesheetDetailState,
   leavesheetUpdateStatusState,
 } from "./constants";
@@ -16,10 +17,16 @@ const getAll = (state: RootReducers): ReducerState<IResponseGetLeavesheet[]> =>
 const deleted = (state: RootReducers): ReducerState<null> =>
   get(state, "leavesheet.deleted", leavesheetDeleteStatusState);
 
+const getAllLeaveApprove = (
+  state: RootReducers
+): ReducerState<IResponseGetLeaveApprove[]> =>
+  get(state, "leavesheet.getAllApproveList", leaveApproveState);
+
 const exportedObj = {
   create,
   getAll,
   deleted,
+  getAllLeaveApprove,
 };
 
 export default exportedObj;

@@ -7,6 +7,7 @@ import {
   leavesheetUpdateStatusState,
   leavesheetState,
   leavesheetDeleteStatusState,
+  leaveApproveState,
 } from "./constants";
 
 export type LeavesheetActionType = ActionType<typeof leavesheetAction>;
@@ -105,6 +106,55 @@ const getAll = createReducer<
     }
   );
 
+const getAllApproveList = createReducer<
+  ReducerState<IResponseGetLeaveApprove[]>,
+  LeavesheetActionType
+>(leaveApproveState)
+  .handleAction(
+    leavesheetAction.getLeaveApproveAction.request,
+    (state: ReducerState<IResponseGetLeaveApprove[]>) => {
+      return {
+        ...state,
+        isFetching: true,
+      };
+    }
+  )
+  .handleAction(
+    leavesheetAction.getLeaveApproveAction.success,
+    (
+      state: ReducerState<IResponseGetLeaveApprove[]>,
+      action: LeavesheetActionType
+    ) => {
+      const payload: IResponse<IResponseGetLeaveApprove[]> = action.payload;
+      return {
+        ...state,
+        isFetching: false,
+        data: payload.data,
+        code: payload.code,
+        error: payload.devMessage,
+      };
+    }
+  )
+  .handleAction(
+    leavesheetAction.getLeaveApproveAction.failure,
+    (
+      state: ReducerState<IResponseGetLeaveApprove[]>,
+      action: LeavesheetActionType
+    ) => {
+      const payload: IResponse<null> = action.payload;
+      return {
+        ...state,
+        isFetching: false,
+        code: payload.code,
+        error: payload.devMessage,
+      };
+    }
+  )
+  .handleAction(
+    leavesheetAction.getLeaveApproveAction.cancel,
+    () => leaveApproveState
+  );
+
 const deleted = createReducer<ReducerState<null>, LeavesheetActionType>(
   leavesheetDeleteStatusState
 )
@@ -151,6 +201,7 @@ export default combineReducers({
   create,
   getAll,
   deleted,
+  getAllApproveList,
   // detail,
   // update,
 });

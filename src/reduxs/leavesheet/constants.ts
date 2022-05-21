@@ -21,6 +21,11 @@ export const UPDATE_LEAVESHEET_SUCCESS = "UPDATE_LEAVESHEET_SUCCESS";
 export const UPDATE_LEAVESHEET_FAILURE = "UPDATE_LEAVESHEET_FAILURE";
 export const UPDATE_LEAVESHEET_CANCEL = "UPDATE_LEAVESHEET_CANCEL";
 
+export const GET_ALL_LEAVEAPPROVE_REQUEST = "GET_ALL_LEAVEAPPROVE_REQUEST";
+export const GET_ALL_LEAVEAPPROVE_SUCCESS = "GET_ALL_LEAVEAPPROVE_SUCCESS";
+export const GET_ALL_LEAVEAPPROVE_FAILURE = "GET_ALL_LEAVEAPPROVE_FAILURE";
+export const GET_ALL_LEAVEAPPROVE_CANCEL = "GET_ALL_LEAVEAPPROVE_CANCEL";
+
 export const createLeavesheetState: ReducerState<IResponseCreateLeavesheet> = {
   isFetching: false,
   data: {
@@ -53,15 +58,14 @@ export const leavesheetUpdateStatusState: ReducerState<null> = {
 
 export const leavesheetDetailState: ReducerState<any> = {
   isFetching: false,
-  data: {
-    // workCreated: "",
-    // workCreatedBy: "",
-    // workDate: "",
-    // workDetail: "",
-    // workEdited: "",
-    // workHours: 0,
-    // workId: "",
-  },
+  data: {},
+  code: 0,
+  error: "",
+};
+
+export const leaveApproveState: ReducerState<IResponseGetLeaveApprove[]> = {
+  isFetching: false,
+  data: [],
   code: 0,
   error: "",
 };

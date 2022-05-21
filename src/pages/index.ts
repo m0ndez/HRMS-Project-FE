@@ -10,6 +10,7 @@ import { ManageUser } from "./ManageUser";
 import { ChangePassword } from "./ChangePassword";
 import { TimeSheet, TimeSheetForm } from "./TimeSheet";
 import { Leave, LeaveForm } from "./Leave";
+import { LeaveApproveList } from "./LeaveApprove";
 
 export {
   Login,
@@ -27,4 +28,5 @@ export {
   TimeSheetForm,
   Leave,
   LeaveForm,
+  LeaveApproveList,
 };

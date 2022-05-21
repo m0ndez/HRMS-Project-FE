@@ -3,19 +3,13 @@ import {
   createLeavesheetAction,
   getLeavesheetAction,
   deleteLeavesheetAction,
+  getLeaveApproveAction,
 } from "./actionCreators";
-import {
-  createLeavesheetState,
-  leavesheetState,
-  leavesheetDeleteStatusState,
-  leavesheetDetailState,
-  leavesheetUpdateStatusState,
-} from "./constants";
 import {
   createLeavesheetService,
   deleteLeavesheetService,
   fetchLeavesheetService,
-  updateLeavesheetService,
+  getLeaveApproveService,
 } from "./services";
 import { toastAction } from "reduxs/toast/actionCreator";
 import { loaderAction } from "reduxs/loader/actionCreators";
@@ -113,10 +107,37 @@ const deleteLeavesheet = (id: string) => async (dispatch: Dispatch) => {
     });
 };
 
+const getAllLeaveApprove = () => async (dispatch: Dispatch) => {
+  dispatch(loaderAction(true));
+  dispatch(getLeaveApproveAction.request({}));
+  await getLeaveApproveService()
+    .then((response) => {
+      const { data } = response;
+      dispatch(getLeaveApproveAction.success(data));
+      dispatch(loaderAction(false));
+    })
+    .catch((error: IResponse<null>) => {
+      dispatch(
+        toastAction({
+          open: true,
+          toastType: "error",
+          toastMessage: error.message || error.devMessage,
+          toastDuration: 3000,
+        })
+      );
+      dispatch(getLeaveApproveAction.failure(error));
+      dispatch(loaderAction(false));
+    })
+    .finally(() => dispatch(loaderAction(false)));
+};
+
 const clearCreateLeavesheet = () => async (dispatch: Dispatch) =>
   dispatch(createLeavesheetAction.cancel({}));
 
 const clearDeleteTimesheet = () => (dispatch: Dispatch) =>
+  dispatch(deleteLeavesheetAction.cancel({}));
+
+const clearGetLeavesheetApprove = () => (dispatch: Dispatch) =>
   dispatch(deleteLeavesheetAction.cancel({}));
 
 export {
@@ -125,4 +146,6 @@ export {
   getAllLeavesheet,
   deleteLeavesheet,
   clearDeleteTimesheet,
+  getAllLeaveApprove,
+  clearGetLeavesheetApprove,
 };

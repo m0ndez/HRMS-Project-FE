@@ -11,6 +11,8 @@ import {
   Radio,
   RadioGroup,
   Select,
+  Stack,
+  Switch,
   TextField,
   Typography,
 } from "@mui/material";
@@ -45,6 +47,8 @@ const constants = {
   compared: (label: string = "") => `ข้อมูลไม่ตรงกับ ${label} **`,
   duplicate: (label: string = "") => `ข้อมูลห้ามตรงกับ ${label} **`,
   minLength: (label: string = "") => `ต้องมีตัวอักษรอย่างน้อย ${label} ตัว **`,
+  maxLength: (label: string = "") => `ต้องมีตัวอักษรไม่เกิน ${label} ตัว **`,
+  pattern: (label: string = "") => `รูปแบบ ${label} ไม่ถูกต้อง **`,
   invalidDate: (label: string = "") => `ข้อมูล ${label} ไม่ถูกต้อง **`,
   minNumber: (label: string = "", num: number) =>
     `จำนวน ${label} ห้ามเกิน ${num}`,
@@ -77,11 +81,14 @@ export default <T,>({
           compareValue,
           duplicateCheck,
           minLength,
+          maxLength,
           numberMax,
           numberMin,
           readOnly,
           minDateKey,
           autoFocus,
+          pattern,
+          switchLabel,
         } = row;
         const rules: Exclude<
           RegisterOptions,
@@ -106,6 +113,11 @@ export default <T,>({
             value: minLength,
             message: constants.minLength(minLength.toString()),
           };
+        if (maxLength)
+          rules.maxLength = {
+            value: maxLength,
+            message: constants.maxLength(maxLength.toString()),
+          };
         if (["date", "datetime"].includes(type))
           rules.validate = (date) =>
             isValid(date) || constants.invalidDate(label);
@@ -119,9 +131,19 @@ export default <T,>({
             value: numberMax,
             message: constants.maxNumber(label, numberMax),
           };
+        if (pattern)
+          rules.pattern = {
+            value: pattern,
+            message: constants.pattern(label),
+          };
 
         return (
-          <Grid item xs={12} sm={grid ? grid : 12} key={`field-${label}-${key}`}>
+          <Grid
+            item
+            xs={12}
+            sm={grid ? grid : 12}
+            key={`field-${label}-${key}`}
+          >
             {["text", "number", "textarea"].includes(type) && (
               <Controller
                 name={name as FieldPath<T>}
@@ -153,6 +175,9 @@ export default <T,>({
                       multiline={["textarea"].includes(type)}
                       rows={4}
                       InputProps={{
+                        inputMode: ["number"].includes(type)
+                          ? "numeric"
+                          : "text",
                         startAdornment: preflixIcon && (
                           <InputAdornment position="start">
                             <AccountCircle
@@ -160,10 +185,6 @@ export default <T,>({
                             />
                           </InputAdornment>
                         ),
-                        inputProps: {
-                          // min: numberMin,
-                          // max: numberMax,
-                        },
                       }}
                       variant={"outlined"}
                     />
@@ -350,7 +371,7 @@ export default <T,>({
                   const handleMinDate = Boolean(
                     getValues(minDateKey as Path<T>)
                   );
-                  
+
                   const setNextDate = minDateKey
                     ? new Date().setDate(
                         new Date(
@@ -393,6 +414,57 @@ export default <T,>({
                           )}
                         />
                       </LocalizationProvider>
+                    </FormControl>
+                  );
+                }}
+              />
+            )}
+            {["switch"].includes(type) && (
+              <Controller
+                name={name as FieldPath<T>}
+                defaultValue={
+                  value as UnpackNestedValue<PathValue<T, Path<T>>> | undefined
+                }
+                control={control}
+                rules={rules}
+                render={({ field, fieldState }) => {
+                  const { name, onBlur, onChange, ref, value } = field;
+                  const { error } = fieldState;
+                  return (
+                    <FormControl
+                      error={Boolean(error)}
+                      fullWidth
+                      disabled={setDisabled || readOnly}
+                    >
+                      {!hideLabel && (
+                        <FormLabel id={`radio-buttons-group-label-${key}`}>
+                          <Typography children={label} variant={"body2"} />
+                        </FormLabel>
+                      )}
+                      <Stack direction={"row"} alignItems={"center"}>
+                        {switchLabel![0] && (
+                          <Typography
+                            variant="subtitle2"
+                            children={switchLabel![0]}
+                          />
+                        )}
+                        <Switch
+                          name={name}
+                          value={value}
+                          checked={Boolean(value)}
+                          onChange={onChange}
+                          id={`${formCategory}-${name}`}
+                          ref={ref}
+                          onBlur={onBlur}
+                        />
+                        {switchLabel![1] && (
+                          <Typography
+                            variant="subtitle2"
+                            children={switchLabel![1]}
+                          />
+                        )}
+                      </Stack>
+                      <FormHelperText>{error?.message}</FormHelperText>
                     </FormControl>
                   );
                 }}

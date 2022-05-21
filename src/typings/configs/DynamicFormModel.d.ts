@@ -14,11 +14,15 @@ declare interface IDynamicFormModel {
   compareValue?: string;
   duplicateCheck?: string;
   minLength?: number;
+  maxLength?: number;
   numberMin?: number;
   numberMax?: number;
   minDateKey?: string;
   maxDateKey?: string;
-  autoFocus?: boolean
+  autoFocus?: boolean;
+  pattern?: RegExp;
+  patternMsg?: string;
+  switchLabel?: string[];
 }
 
 declare interface IDynamicOptions {
@@ -30,7 +34,7 @@ declare type IDynamicCategory = {
   [key in string]: {
     name: string;
     label: string;
-    pageMode?: string
+    pageMode?: string;
   };
 };
 

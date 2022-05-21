@@ -2,13 +2,13 @@ import WorkHistoryIcon from "@mui/icons-material/WorkHistory";
 import GroupIcon from "@mui/icons-material/Group";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import AvTimerIcon from "@mui/icons-material/AvTimer";
-import ContactPageIcon from "@mui/icons-material/ContactPage";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import SyncLockIcon from '@mui/icons-material/SyncLock';
-import ContactMailIcon from '@mui/icons-material/ContactMail';
-import PeopleAltRoundedIcon from '@mui/icons-material/PeopleAltRounded';
-import AssessmentRoundedIcon from '@mui/icons-material/AssessmentRounded';
-import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import SyncLockIcon from "@mui/icons-material/SyncLock";
+import ContactMailIcon from "@mui/icons-material/ContactMail";
+import PeopleAltRoundedIcon from "@mui/icons-material/PeopleAltRounded";
+import AssessmentRoundedIcon from "@mui/icons-material/AssessmentRounded";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 export const LIST_MENUS: TMenuConstants = {
   dashboard: {
     permission: "",
@@ -60,6 +60,11 @@ export const LIST_MENUS: TMenuConstants = {
         label: "พนักงาน",
         icon: <PeopleAltRoundedIcon />,
         path: "/manage/employees",
+      },
+      {
+        label: "อนุมัติการลางาน",
+        icon: <AssignmentTurnedInIcon />,
+        path: "/manage/leave-approve",
       },
     ],
   },

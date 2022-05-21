@@ -43,7 +43,7 @@ export default (({
   // Create Flow
   React.useEffect(() => {
     if ([responseCode.OK].includes(createLeavesheetCode)) {
-      navigate(-1);
+      navigate('/leavesheet');
     }
     return () => {
       clearCreateLeavesheet();

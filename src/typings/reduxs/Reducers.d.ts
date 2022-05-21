@@ -13,4 +13,5 @@ declare interface RootReducers {
   user: IUserStore;
   timesheet: ITimesheetStore;
   leavesheet: ILeavesheetStore;
+  employee: IEmployeeStore;
 }

@@ -14,18 +14,82 @@ import { initCategory, initForm } from "../../Model/interface";
 import { Button, Grid, Paper, Typography } from "@mui/material";
 
 const constants = {
-  pageTitle: "บันทึกเวลาการทำงาน",
+  pageTitle: "สร้างพนักงาน",
   submitBtn: "บันทึกข้อมูล",
   backBtn: "ย้อนกลับ",
 };
 
-export default (() => {
+export default (({
+  cancelEmployeeCreate = () => {
+    noop();
+  },
+  employeeCreate = () => {
+    noop();
+  },
+  employeeCreateCode = 0,
+  employeeDetailCode = 0,
+  employeeDetailData = {
+    address: "",
+    fname: "",
+    id: "",
+    lname: "",
+    password: "",
+    position: "",
+    sex: 1,
+    state: false,
+    tel: "",
+    username: "",
+  },
+  employeeDetailGet = () => {
+    noop();
+  },
+  employeeDetailIsFetching = false,
+  employeeUpdateCode = 0,
+  clearEmployeeUpdate = () => {
+    noop();
+  },
+  employeeUpdate = () => {
+    noop();
+  },
+}) => {
   const [disableForm, setDisableForm] = React.useState(false);
   const navigate = useNavigate();
   const pageMode = useLocation().state as {
     mode: string;
     id: string | undefined;
   };
+
+  // Detect Route
+  React.useEffect(() => {
+    handleGetEmployeeDetail();
+  }, []);
+
+  // Create Flow
+  React.useEffect(() => {
+    if ([responseCode.OK].includes(employeeCreateCode)) {
+      navigate("/manage/employees");
+    }
+    return () => {
+      cancelEmployeeCreate();
+    };
+  }, [employeeCreateCode]);
+
+  // Get Detail Flow
+  React.useEffect(() => {
+    if ([employeeDetailCode].includes(responseCode.OK)) {
+      onReceiveDateFromApi();
+    }
+  }, [employeeDetailIsFetching]);
+
+  // Update Flow
+  React.useEffect(() => {
+    if ([responseCode.OK].includes(employeeUpdateCode)) {
+      navigate(-1);
+    }
+    return () => {
+      clearEmployeeUpdate();
+    };
+  }, [employeeUpdateCode]);
 
   const initFormMethod = useForm<IEmployeeManagementForm>({
     mode: "onSubmit",
@@ -34,6 +98,21 @@ export default (() => {
   });
 
   const { handleSubmit, setValue } = initFormMethod;
+
+  const handleGetEmployeeDetail = () => {
+    if (pageMode.id) {
+      employeeDetailGet(pageMode.id);
+    }
+  };
+
+  const handleCreateEmployee = (value: IRequestCreateEmployee) => {
+    employeeCreate(value);
+  };
+
+  const handleUpdateEmployee = (value: IResponseGetEmployeeDetail) => {
+    // updateTimesheet(value);
+    employeeUpdate(value);
+  };
 
   const onSubmit: SubmitHandler<IEmployeeManagementForm> = (value) => {
     const convertedValue: {
@@ -55,10 +134,38 @@ export default (() => {
         }
       });
     });
-    console.log(convertedValue);
-    pageMode.mode === "create";
-    //   ? handleCreateLeavesheet(convertedValue as IRequestCreateLeavesheet)
-    //   : handleUpdateLeavesheet(convertedValue as IRequestUpdateLeavesheet);
+    pageMode.mode === "create"
+      ? handleCreateEmployee(convertedValue as IRequestCreateEmployee)
+      : handleUpdateEmployee(convertedValue as IResponseGetEmployeeDetail);
+  };
+
+  const onReceiveDateFromApi = () => {
+    // Generate Data if Multiple Mode
+    if (["edit"].includes(pageMode.mode)) {
+      const cateKey = Object.keys(initCategory);
+      cateKey.forEach((cateItem) => {
+        if ([initCategory[cateItem].pageMode].includes(pageMode.mode)) {
+          initForm.forEach((items) => {
+            if ([items.formCategory].includes(cateItem)) {
+              const rawValue =
+                employeeDetailData[
+                  items.name as keyof IResponseGetEmployeeDetail
+                ];
+              const formatedValue =
+                items.type === "date"
+                  ? new Date(rawValue as string | number | Date)
+                  : rawValue;
+
+              setValue(
+                items.name as keyof IEmployeeManagementForm,
+                formatedValue as string | number | undefined
+              );
+            }
+          });
+        }
+      });
+    } else {
+    }
   };
 
   const onErrors: SubmitErrorHandler<IEmployeeManagementForm> = (error) => {};
@@ -142,4 +249,7 @@ export default (() => {
       </Grid>
     </Grid>
   );
-}) as React.FunctionComponent;
+}) as React.FunctionComponent<
+  IEmployeeManagementFormComponentProps &
+    IEmployeeManagementFormComponentActionProps
+>;

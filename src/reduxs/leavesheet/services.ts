@@ -24,9 +24,19 @@ const deleteLeavesheetService = (
 ): Promise<AxiosResponse<IResponse<null>>> =>
   axios.delete(`${apis.leavesheet}/${id}`);
 
+const getLeaveApproveService = (): Promise<
+  AxiosResponse<IResponse<IResponseGetLeaveApprove[]>>
+> =>
+  axios.get(`${apis.leavesheet}`, {
+    params: {
+      isManager: true,
+    },
+  });
+
 export {
   createLeavesheetService,
   updateLeavesheetService,
   fetchLeavesheetService,
   deleteLeavesheetService,
+  getLeaveApproveService,
 };

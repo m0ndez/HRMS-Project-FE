@@ -1,4 +1,4 @@
-import { ExpandMore, ExpandLess } from "@mui/icons-material";
+import { ExpandMore, ChevronLeft } from "@mui/icons-material";
 import {
   Collapse,
   Divider,
@@ -23,7 +23,7 @@ export default (({
   currentPath = "",
 }) => {
   const RenderExpandIcon = ({ expanded }: { expanded: boolean }) =>
-    expanded ? <ExpandMore /> : <ExpandLess />;
+    expanded ? <ExpandMore /> : <ChevronLeft />;
   return (
     <div>
       <Toolbar />

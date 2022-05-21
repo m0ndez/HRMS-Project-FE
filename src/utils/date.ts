@@ -4,7 +4,7 @@ import { th } from "date-fns/locale";
 import { get, isEmpty } from "lodash";
 
 const formatDate = (data: string) => {
-  return format(new Date(data), "dd MMM yyyy", { locale: th });
+  return format(new Date(data), "d MMM yyyy", { locale: th });
 };
 
 const formatDateToApi = (

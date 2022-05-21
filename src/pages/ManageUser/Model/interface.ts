@@ -1,3 +1,5 @@
+import { THAI_PHONE_NUMER } from "constants/regex";
+
 export const initManageUserFormCategory: IDynamicCategory = {
   user: {
     name: "user",
@@ -29,7 +31,10 @@ export const initManageAdminForm: IDynamicFormModel[] = [
     formCategory: "user",
     label: "เบอร์โทรศัพท์",
     name: "tel",
+    minLength: 9,
+    maxLength: 10,
     type: "text",
+    pattern: THAI_PHONE_NUMER,
     value: "",
     readOnly: false,
     required: true,

@@ -15,6 +15,7 @@ import {
   TimeSheetForm,
   Leave,
   LeaveForm,
+  LeaveApproveList,
 } from "pages";
 import { Route, Routes } from "react-router-dom";
 import { CssBaseline, ThemeProvider } from "@mui/material";
@@ -66,6 +67,11 @@ function App() {
                   <Route
                     path="/manage/employees/edit/:id"
                     element={<EmployeeForm />}
+                  />
+
+                  <Route
+                    path="/manage/leave-approve"
+                    element={<LeaveApproveList />}
                   />
                 </>
               )}

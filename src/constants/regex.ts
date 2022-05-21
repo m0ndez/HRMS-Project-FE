@@ -8,6 +8,8 @@ export const SPACE = /\s+/g
 export const UNDERSCORE_DASH_SPACE = /[-_ ]/g
 export const YOUTUBE_EMBED_ID = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/
 
+export const THAI_PHONE_NUMER = /((\+66|0)(\d{1,2}\-?\d{3}\-?\d{3,4}))|((\+๖๖|๐)([๐-๙]{1,2}\-?[๐-๙]{3}\-?[๐-๙]{3,4}))/gm
+
 // check if password contains at least 6 characters with one capital letter and one special character
 export const CHECK_PASSWORD = /^(?=.*[A-Z])(?=.*[.*@$!%*?&#^()\-_+=<>])[A-Za-z\d.*@$!%*?&#^()\-_+=<>]{6,}$/g
 
