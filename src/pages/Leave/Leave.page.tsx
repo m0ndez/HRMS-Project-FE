@@ -15,6 +15,7 @@ import { get, noop } from "lodash";
 import dateUtils from "utils/date";
 import DeleteForeverRoundedIcon from "@mui/icons-material/DeleteForeverRounded";
 import { responseCode } from "constants/response";
+import { ExportToolbar } from "components";
 
 const translateLeaveRemark: { [key in string]: string } = {
   "1": "ลากิจ",
@@ -70,9 +71,7 @@ export default (({
     if ([deletedLeavesheetCode].includes(responseCode.OK)) {
       getAllLeavesheet();
     }
-    return () => {
-      clearDeleteTimesheet();
-    };
+    return () => {};
   }, [deletedLeavesheetIsFetching]);
 
   const initDataTable = () => {
@@ -203,6 +202,7 @@ export default (({
 
           <Grid container item xs={12}>
             <DataGrid
+              components={{ Toolbar: ExportToolbar }}
               autoHeight
               rows={initDataTable().rows}
               columns={initDataTable().columns}

@@ -9,7 +9,12 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  GridColDef,
+  GridRenderCellParams,
+  GridToolbar,
+} from "@mui/x-data-grid";
 import { get, noop } from "lodash";
 import dateUtils from "utils/date";
 import DeleteForeverRoundedIcon from "@mui/icons-material/DeleteForeverRounded";
@@ -18,6 +23,8 @@ import { useNavigate } from "react-router-dom";
 import { axios } from "utils";
 import apis from "constants/apis";
 import { AxiosResponse } from "axios";
+import { EMPLOYEE_POSITION } from "constants/employeePostion";
+import { ExportToolbar } from "components";
 
 const constants = {
   pageTitle: "รายการข้อมูล",
@@ -137,6 +144,7 @@ export default (({
           ids: index + 1,
           ...rowItems,
           created: dateUtils.formatDate(rowItems.created),
+          position: EMPLOYEE_POSITION[rowItems.position],
         }))
       );
       columns.push(
@@ -205,6 +213,7 @@ export default (({
           headerName: "การจัดการ",
           sortable: false,
           headerAlign: "center",
+          disableExport: true,
           align: "center",
           renderCell: (
             params: GridRenderCellParams<any, IResponseGetEmployee>
@@ -302,6 +311,8 @@ export default (({
 
           <Grid container item xs={12}>
             <DataGrid
+              components={{ Toolbar: ExportToolbar }}
+              loading={employeeGetIsFetching}
               autoHeight
               rows={initDataTable().rows}
               columns={initDataTable().columns}
@@ -311,6 +322,7 @@ export default (({
               disableSelectionOnClick
               localeText={{
                 noRowsLabel: constants.emptyData,
+                toolbarColumns: "ปรับแต่งตาราง",
               }}
             />
           </Grid>

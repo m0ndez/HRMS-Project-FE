@@ -92,14 +92,14 @@ const Layout: FunctionComponent<
   return (
     <Appbar
       displayName={[authenData.fname, authenData.lname].join(" ")}
-      headerName="Example Company"
+      headerName="HRMS"
       isOpen={mobileOpen}
       toggleOpen={handleDrawerToggle}
       settingCallback={[
         {
           name: "จัดการผู้ใช้",
           func: () => {
-            handleNavigate("/report/employees", true);
+            handleNavigate("/user", true);
           },
         },
         {

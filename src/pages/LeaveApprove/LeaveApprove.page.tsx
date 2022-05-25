@@ -1,14 +1,5 @@
 import React from "react";
-import {
-  Button,
-  Grid,
-  Paper,
-  Stack,
-  Fab,
-  Switch,
-  Tooltip,
-  Typography,
-} from "@mui/material";
+import { Button, Grid, Paper, Stack, Typography } from "@mui/material";
 import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { get, noop } from "lodash";
 import { useNavigate } from "react-router-dom";
@@ -16,6 +7,7 @@ import dateUtils from "utils/date";
 import { AxiosResponse } from "axios";
 import apis from "constants/apis";
 import { axios } from "utils";
+import { ExportToolbar } from "components";
 
 const constants = {
   pageTitle: "รายการข้อมูล",
@@ -113,6 +105,7 @@ export default (({
             } as GridColDef)
         ),
         {
+          disableExport: true,
           field: "manage",
           headerName: "การจัดการ",
           sortable: false,
@@ -198,10 +191,30 @@ export default (({
               <Typography children={constants.pageRemark} variant={"h6"} />
               <Typography variant="subtitle1" children={constants.helperText} />
             </Grid>
+            <Grid
+              container
+              item
+              xs={12}
+              sm={6}
+              direction={"row"}
+              justifyContent={"flex-end"}
+              spacing={2}
+            >
+              <Grid item>
+                <Button
+                  variant="contained"
+                  color={"secondary"}
+                  onClick={() => navigate(-1)}
+                >
+                  {constants.backBtn}
+                </Button>
+              </Grid>
+            </Grid>
           </Grid>
 
           <Grid container item xs={12}>
             <DataGrid
+              components={{ Toolbar: ExportToolbar }}
               autoHeight
               rows={initDataTable().rows}
               columns={initDataTable().columns}
@@ -211,6 +224,7 @@ export default (({
               disableSelectionOnClick
               localeText={{
                 noRowsLabel: constants.emptyData,
+                toolbarColumns: "ปรับแต่งตาราง",
               }}
             />
           </Grid>

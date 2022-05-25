@@ -14,4 +14,5 @@ declare interface RootReducers {
   timesheet: ITimesheetStore;
   leavesheet: ILeavesheetStore;
   employee: IEmployeeStore;
+  report: IReportStore
 }

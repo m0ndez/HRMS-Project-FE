@@ -6,5 +6,7 @@ export const EMPLOYEE_POSITION: {[key in string]: string} = {
   "Senior Dev Frond-End": "หัวหน้า โปรแกรมเมอร์ Front-End",
   "Senior Dev Back-End": "หัวหน้า โปรแกรมเมอร์ Back-End",
   "Senior Software Tester": "หัวหน้า ซอร์ฟแวร์เทสเตอร์",
+  HR: 'ฝ่ายบุคคล',
   Programmer: "โปรแกรมเมอร์",
+  'N/A': 'N/A'
 };

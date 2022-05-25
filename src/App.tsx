@@ -55,7 +55,7 @@ function App() {
                     path="/report/employees"
                     element={<EmployeeReport />}
                   />
-                  <Route path="/report/leaves" element={<LeaveReport />} />
+                  {/* <Route path="/report/leaves" element={<LeaveReport />} /> */}
                   <Route
                     path="/manage/employees"
                     element={<ManageEmployee />}

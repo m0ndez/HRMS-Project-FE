@@ -6,6 +6,7 @@ const apis = {
   leavesheet: "leavesheet",
   leaves: "leaves",
   employee: "employee",
+  report: 'report'
 };
 
 export default apis;

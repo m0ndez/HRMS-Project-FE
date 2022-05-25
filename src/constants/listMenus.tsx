@@ -78,11 +78,11 @@ export const LIST_MENUS: TMenuConstants = {
         icon: <AssessmentRoundedIcon />,
         path: "/report/employees",
       },
-      {
-        label: "รายงานการลางาน",
-        icon: <AssessmentRoundedIcon />,
-        path: "/report/leaves",
-      },
+      // {
+      //   label: "รายงานการลางาน",
+      //   icon: <AssessmentRoundedIcon />,
+      //   path: "/report/leaves",
+      // },
     ],
   },
 };

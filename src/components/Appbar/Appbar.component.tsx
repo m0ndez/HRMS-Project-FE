@@ -10,9 +10,10 @@ import {
   Tooltip,
   Menu,
   MenuItem,
+  Stack,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-
+import SwitchRightTwoToneIcon from '@mui/icons-material/SwitchRightTwoTone';
 const constants = {
   openSetting: "จัดการผู้ใช้",
 };
@@ -94,9 +95,12 @@ export default (({
               >
                 <MenuIcon />
               </IconButton>
+              <Stack direction={'row'} spacing={1} alignItems={'center'} >
+              <SwitchRightTwoToneIcon color={'action'} fontSize={'large'} />
               <Typography variant="h6" noWrap component="div">
                 {headerName}
               </Typography>
+              </Stack>
             </Toolbar>
           </Box>
           <Box sx={{ flexGrow: 0 }}>

@@ -8,6 +8,7 @@ import user from "./user/reducers";
 import timesheet from "./timesheet/reducers";
 import leavesheet from "./leavesheet/reducers";
 import employee from './employee/reducers'
+import report from './report/reducers'
 const persistConfig = {
   key: import.meta.env.VITE_ENVIRONMENT_NAME,
   storage,
@@ -27,6 +28,7 @@ const rootReducer = {
   timesheet,
   leavesheet,
   employee,
+  report,
 };
 
 export default persistReducer(persistConfig, combineReducers(rootReducer));

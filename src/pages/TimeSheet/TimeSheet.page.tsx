@@ -21,6 +21,7 @@ import dateUtils from "utils/date";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteForeverRoundedIcon from "@mui/icons-material/DeleteForeverRounded";
 import { responseCode } from "constants/response";
+import { ExportToolbar } from "components";
 
 const constants = {
   pageTitle: "รายการข้อมูล",
@@ -205,6 +206,7 @@ export default (({
 
           <Grid container item xs={12}>
             <DataGrid
+              components={{ Toolbar: ExportToolbar }}
               autoHeight
               rows={initDataTable().rows}
               columns={initDataTable().columns}
